@@ -30,9 +30,6 @@ build/
 !**/src/test/**/build/
 
 
-backend/src/main/resources/static
-
-
 ### VS Code ###
 .vscode/
 
