@@ -1,12 +1,21 @@
 package com.example.demo;
 
-import org.springframework.web.bind.annotation.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
+import org.springframework.web.bind.annotation.GetMaping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestController {
 
-    @GetMapping("/hello")
+    private List<String> greetings = Arrays.asList("Hallo", "Moin", "Servus");
+
+    @GetMapping("/api/greeting", produces="text/plain")
     public String hello() {
-        return "Hello world!!!!";
+        Random rand = new Random();
+        return greetings.get(rand.nextInt(greeting.size()));
     }
+
 }
