@@ -12,7 +12,7 @@ public class TestController {
 
     private List<String> greetings = Arrays.asList("Hallo", "Moin", "Servus");
 
-    @GetMapping("/api/greeting", produces="text/plain")
+    @GetMapping(path="/api/greeting", produces="text/plain")
     public String hello() {
         Random rand = new Random();
         return greetings.get(rand.nextInt(greetings.size()));
