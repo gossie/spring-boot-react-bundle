@@ -14,7 +14,7 @@ function App() {
             .then(response => response.text())
             .then(text => setGreeting(text))
             .catch(err => setGreeting('Da ist etwas schief gelaufen'));
-    });
+    }, []);
 
     return (
         <div>
