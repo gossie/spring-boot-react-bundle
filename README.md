@@ -12,8 +12,13 @@ It is important that the java buildpack, the one for the app that is actually ru
 
 ## Project structure
 
-The project consists of to sub projects. The react project is located in the frontend directory and the Spring Boot project in the backend directory. To let heroku know that the main project is the Spring Boot project, there is a parent pom.xml in the root directory. That way, when heroku builds checks out the code and starts the build the parent pom and the backend module are built.
+The project consists of to sub projects. The react project is located in the frontend directory and the Spring Boot project in the backend directory. To let heroku know that the main project is the Spring Boot project, there is a parent pom.xml in the root directory. That way, when heroku builds checks out the code and starts the build the parent pom and the backend module are built.<br />
+To let heroku know that the jar file is now in the target directory of the backend, the `Procfile` is needed.
 
 ## Bundling the frontend into the backend jar
 
 The `build-frontend.sh` is a script that builds the frontend using npm (installed thanks to the nodejs buildpack) and copies the content of the resulting `build` directory to the backend's `target/classes/static` directory. The script ist executed by the `exec-maven-plugin` that is included in the backend's `pom.xml`.<br />
+
+## Deployment to heroku
+
+Just connect your heroku app and yout GitHub repository on the heroku app's "Deploy"-tab.
