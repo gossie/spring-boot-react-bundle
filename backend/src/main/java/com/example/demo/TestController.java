@@ -15,7 +15,7 @@ public class TestController {
     @GetMapping("/api/greeting", produces="text/plain")
     public String hello() {
         Random rand = new Random();
-        return greetings.get(rand.nextInt(greeting.size()));
+        return greetings.get(rand.nextInt(greetings.size()));
     }
 
 }
