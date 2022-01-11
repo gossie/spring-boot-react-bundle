@@ -1,4 +1,4 @@
-# nf-with-frontend
+# spring-boot-react-bundle
 
 This is a demo project that shows how it is possible to deploy a react frontend and a Spring Boot backend into a heroku dyno. The following paragraphs describe the actions you need to perform.
 
