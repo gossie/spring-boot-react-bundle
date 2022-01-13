@@ -7,10 +7,10 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.6.2</version>
 	</parent>
-	<groupId>de.neuefische</groupId>
-	<artifactId>nf-with-frontend-parent</artifactId>
+	<groupId>com.github.gossie</groupId>
+	<artifactId>spring-boot-react-bundle-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>nf-with-frontend-parent</name>
+	<name>spring-boot-react-bundle-parent</name>
 	<packaging>pom</packaging>
 	
 	<modules>
