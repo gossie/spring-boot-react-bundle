@@ -87,6 +87,7 @@
                             <resources>
                                 <resource>
                                     <directory>${project.parent.basedir}/frontend/build/</directory>
+                                    <filtering>false</filtering>
                                 </resource>
                             </resources>
                         </configuration>
