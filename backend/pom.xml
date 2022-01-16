@@ -78,15 +78,15 @@
                 <executions>
                     <execution>
                         <id>copy-static</id>
-                        <phase>validate</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
+                        <phase>prepare-package</phase>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/classes/static</outputDirectory>
+                            <outputDirectory>${project.build.directory}/src/main/resources/static</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${project.parent.basedir}/frontend/build/</directory>
+                                    <directory>${project.parent.basedir}/frontend/build</directory>
                                     <filtering>false</filtering>
                                 </resource>
                             </resources>
