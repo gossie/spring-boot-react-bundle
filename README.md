@@ -3,12 +3,9 @@
 This is a demo project that shows how it is possible to deploy a react frontend and a Spring Boot backend into a heroku dyno. The following paragraphs describe the actions you need to perform.
 
 ## Creating an heroku app
-When creating the heroku app I recommend to use the heroku cli. Use the following commands to create the app and add the required buildpacks.
+When creating the heroku app I recommend to use the heroku cli. Use the following commands to create the app and add the required buildpack.
 * `heroku create <your-app-name>`
 * `heroku buildpacks:set heroku/java --app=<your-app-name>`
-* `heroku buildpacks:add --index 1  heroku/nodejs --app=<your-app-name>`
-
-It is important that the java buildpack, the one for the app that is actually running in the heroku dyno, is the last buildpack. Also, to make sure that the nodejs buildpack is really installed, there needs to be an empty package.json in the root directory of your project.
 
 ## Project structure
 
