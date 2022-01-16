@@ -17,7 +17,7 @@ To let heroku know that the jar file is now in the target directory of the backe
 
 ## Bundling the frontend into the backend jar
 
-The `build-frontend.sh` is a script that builds the frontend using npm (installed thanks to the nodejs buildpack) and copies the content of the resulting `build` directory to the backend's `target/classes/static` directory. The script ist executed by the `exec-maven-plugin` that is included in the backend's `pom.xml`.<br />
+The frontend project is built using the `com.github.eirslett:frontend-maven-plugin`. The `maven-resources-plugin` is used to copy the content of the resulting `build` directory to the backend's `target/classes/static` directory.<br />
 
 ## Deployment to heroku
 
