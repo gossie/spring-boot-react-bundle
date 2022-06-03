@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,7 +18,7 @@ public class TodoIntegrationTest {
     private TestRestTemplate restTemplate;
 
     @Test
-    public void getAllTodos(){
+    public void integrationTest(){
         // initial get todos via api should be empty
         ResponseEntity<Todo[]> responseEntity = restTemplate.getForEntity("/api/kanban", Todo[].class);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -37,5 +38,13 @@ public class TodoIntegrationTest {
         responseEntity = restTemplate.getForEntity("/api/kanban", Todo[].class);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).containsExactlyInAnyOrderElementsOf(Arrays.asList(todos));
+
+        // delete one todo
+        restTemplate.delete("/api/kanban/" + todo3.getId());
+
+        // check if deleted
+        responseEntity = restTemplate.getForEntity("/api/kanban", Todo[].class);
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).containsExactlyInAnyOrderElementsOf(List.of(todo1, todo2));
     }
 }

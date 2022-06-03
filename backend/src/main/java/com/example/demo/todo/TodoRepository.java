@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class TodoRepository {
@@ -29,5 +30,9 @@ public class TodoRepository {
 
     public void save(Todo todo) {
         todos.put(todo.getId(), todo);
+    }
+
+    public Optional<Todo> delete(String id) {
+        return Optional.ofNullable(todos.remove(id));
     }
 }

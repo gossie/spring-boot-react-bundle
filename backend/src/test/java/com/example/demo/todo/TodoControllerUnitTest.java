@@ -33,4 +33,15 @@ class TodoControllerUnitTest {
 
         Mockito.verify(mockedTodoService).addTodo(todo1);
     }
+
+    @Test
+    void deleteTodo() {
+        TodoService mockedTodoService = Mockito.mock(TodoService.class);
+        TodoController todoController = new TodoController(mockedTodoService);
+        Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
+
+        todoController.deleteTodo(todo1.getId());
+
+        Mockito.verify(mockedTodoService).deleteTodo(todo1.getId());
+    }
 }

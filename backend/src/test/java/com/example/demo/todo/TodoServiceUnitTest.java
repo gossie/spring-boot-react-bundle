@@ -37,4 +37,14 @@ class TodoServiceUnitTest {
 
         Mockito.verify(mockedTodoRepository).save(todo1);
     }
+    @Test
+    void deleteTodo() {
+        TodoRepository mockedTodoRepository = Mockito.mock(TodoRepository.class);
+        TodoService todoService = new TodoService(mockedTodoRepository);
+        Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
+
+        todoService.deleteTodo(todo1.getId());
+
+        Mockito.verify(mockedTodoRepository).delete(todo1.getId());
+    }
 }

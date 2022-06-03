@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,6 +24,12 @@ public class TodoController {
     public void addTodo(@RequestBody Todo todo){
         // TODO add checks for missing fields?
         todoService.addTodo(todo);
+    }
+
+    @DeleteMapping("/{id}")
+    public Optional<Todo> deleteTodo(@PathVariable String id){
+        // TODO check for not existent
+        return todoService.deleteTodo(id);
     }
 
 }
