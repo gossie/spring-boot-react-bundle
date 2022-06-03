@@ -53,7 +53,12 @@ public class TodoController {
     @PutMapping("/next")
     public ResponseEntity<Todo> moveTodoToNextStatus(@RequestBody Todo todo){
 
-        return ResponseEntity.of(todoService.toggleTodoStatus(todo));
+        return ResponseEntity.of(todoService.nextTodoStatus(todo));
+    }
+    @PutMapping("/prev")
+    public ResponseEntity<Todo> moveTodoToPrevStatus(@RequestBody Todo todo){
+
+        return ResponseEntity.of(todoService.prevTodoStatus(todo));
     }
 
 }

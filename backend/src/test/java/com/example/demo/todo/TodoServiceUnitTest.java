@@ -49,28 +49,42 @@ class TodoServiceUnitTest {
     }
 
     @Test
-    void toggleTodoStatus() {
+    void nextTodoStatus() {
 
         TodoRepository mockedTodoRepository = Mockito.mock(TodoRepository.class);
         TodoService todoService = new TodoService(mockedTodoRepository);
         Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
         when(mockedTodoRepository.findById(todo1.getId())).thenReturn(Optional.of(todo1));
 
-        Optional<Todo> todoReturn = todoService.toggleTodoStatus(todo1);
+        Optional<Todo> todoReturn = todoService.nextTodoStatus(todo1);
 
         assertThat(todoReturn.get()).extracting(Todo::getId).isEqualTo(todo1.getId());
         assertThat(todoReturn.get()).extracting(Todo::getStatus).isEqualTo(TodoStatus.IN_PROGRESS);
 
-        todoReturn = todoService.toggleTodoStatus(todo1);
+        todoReturn = todoService.nextTodoStatus(todo1);
 
         assertThat(todoReturn.get()).extracting(Todo::getId).isEqualTo(todo1.getId());
         assertThat(todoReturn.get()).extracting(Todo::getStatus).isEqualTo(TodoStatus.DONE);
 
-        todoReturn = todoService.toggleTodoStatus(todo1);
+        todoReturn = todoService.nextTodoStatus(todo1);
 
         assertThat(todoReturn.get()).extracting(Todo::getId).isEqualTo(todo1.getId());
         assertThat(todoReturn.get()).extracting(Todo::getStatus).isEqualTo(TodoStatus.OPEN);
 
+    }
+
+    @Test
+    void prevTodoStatus() {
+
+        TodoRepository mockedTodoRepository = Mockito.mock(TodoRepository.class);
+        TodoService todoService = new TodoService(mockedTodoRepository);
+        Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
+        when(mockedTodoRepository.findById(todo1.getId())).thenReturn(Optional.of(todo1));
+
+        Optional<Todo> todoReturn = todoService.prevTodoStatus(todo1);
+
+        assertThat(todoReturn.get()).extracting(Todo::getId).isEqualTo(todo1.getId());
+        assertThat(todoReturn.get()).extracting(Todo::getStatus).isEqualTo(TodoStatus.DONE);
     }
 
     @Test

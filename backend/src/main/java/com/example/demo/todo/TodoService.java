@@ -25,10 +25,19 @@ public class TodoService {
         return todoRepository.delete(id);
     }
 
-    public Optional<Todo> toggleTodoStatus(Todo todo) {
+    public Optional<Todo> nextTodoStatus(Todo todo) {
         Optional<Todo> todoTmp = todoRepository.findById(todo.getId());
         if(todoTmp.isPresent()) {
             todoTmp.get().setStatus(todoTmp.get().getStatus().toggleStatus());
+            todoRepository.save(todoTmp.get());
+        }
+        return todoTmp;
+    }
+
+    public Optional<Todo> prevTodoStatus(Todo todo) {
+        Optional<Todo> todoTmp = todoRepository.findById(todo.getId());
+        if(todoTmp.isPresent()) {
+            todoTmp.get().setStatus(todoTmp.get().getStatus().toggleStatus().toggleStatus());
             todoRepository.save(todoTmp.get());
         }
         return todoTmp;
@@ -45,4 +54,5 @@ public class TodoService {
         }
         return null;
     }
+
 }

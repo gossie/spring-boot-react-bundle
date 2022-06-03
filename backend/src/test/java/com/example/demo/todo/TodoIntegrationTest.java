@@ -88,6 +88,14 @@ public class TodoIntegrationTest {
         assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(todoResponse.getBody().getStatus()).isEqualTo(TodoStatus.IN_PROGRESS);
 
+        // move task to prev status
+        todoResponse = restTemplate.exchange("/api/kanban/prev", HttpMethod.PUT, new HttpEntity<>(todo1), Todo.class);
+        assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        // using getTodoById api here
+        todoResponse = restTemplate.getForEntity("/api/kanban/" + todo1.getId(), Todo.class);
+        assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(todoResponse.getBody().getStatus()).isEqualTo(TodoStatus.OPEN);
+
         // same but for todo not in db
         todoResponse = restTemplate.exchange("/api/kanban/next", HttpMethod.PUT, new HttpEntity<>(todo2), Todo.class);
         assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
