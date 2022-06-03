@@ -1,6 +1,7 @@
 package com.example.demo.todo;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,9 @@ public class TodoController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void addTodo(@RequestBody Todo todo){
+        // TODO add checks for missing fields?
         todoService.addTodo(todo);
     }
 
