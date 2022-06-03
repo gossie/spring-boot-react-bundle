@@ -23,4 +23,13 @@ public class TodoService {
     public Optional<Todo> deleteTodo(String id) {
         return todoRepository.delete(id);
     }
+
+    public Optional<Todo> toggleTodoStatus(Todo todo) {
+        Optional<Todo> todoTmp = todoRepository.findById(todo.getId());
+        if(todoTmp.isPresent()) {
+            todoTmp.get().setStatus(todoTmp.get().getStatus().toggleStatus());
+            todoRepository.save(todoTmp.get());
+        }
+        return todoTmp;
+    }
 }

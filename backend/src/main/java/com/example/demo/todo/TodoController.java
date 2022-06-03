@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,6 +31,12 @@ public class TodoController {
         // TODO check for not existent
 
         return ResponseEntity.of(todoService.deleteTodo(id));
+    }
+
+    @PutMapping("/next")
+    public ResponseEntity<Todo> moveTodoToNext(@RequestBody Todo todo){
+
+        return ResponseEntity.of(todoService.toggleTodoStatus(todo));
     }
 
 }

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -38,7 +39,7 @@ class TodoServiceUnitTest {
         Mockito.verify(mockedTodoRepository).save(todo1);
     }
     @Test
-    void deleteTodo() {
+    void deleteTodo() {// TODO delete has now return -> test this
         TodoRepository mockedTodoRepository = Mockito.mock(TodoRepository.class);
         TodoService todoService = new TodoService(mockedTodoRepository);
         Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
@@ -46,5 +47,30 @@ class TodoServiceUnitTest {
         todoService.deleteTodo(todo1.getId());
 
         Mockito.verify(mockedTodoRepository).delete(todo1.getId());
+    }
+
+    @Test
+    void toggleTodoStatus() {
+
+        TodoRepository mockedTodoRepository = Mockito.mock(TodoRepository.class);
+        TodoService todoService = new TodoService(mockedTodoRepository);
+        Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
+        when(mockedTodoRepository.findById(todo1.getId())).thenReturn(Optional.of(todo1));
+
+        Optional<Todo> todoReturn = todoService.toggleTodoStatus(todo1);
+
+        assertThat(todoReturn.get()).extracting(Todo::getId).isEqualTo(todo1.getId());
+        assertThat(todoReturn.get()).extracting(Todo::getStatus).isEqualTo(TodoStatus.IN_PROGRESS);
+
+        todoReturn = todoService.toggleTodoStatus(todo1);
+
+        assertThat(todoReturn.get()).extracting(Todo::getId).isEqualTo(todo1.getId());
+        assertThat(todoReturn.get()).extracting(Todo::getStatus).isEqualTo(TodoStatus.DONE);
+
+        todoReturn = todoService.toggleTodoStatus(todo1);
+
+        assertThat(todoReturn.get()).extracting(Todo::getId).isEqualTo(todo1.getId());
+        assertThat(todoReturn.get()).extracting(Todo::getStatus).isEqualTo(TodoStatus.OPEN);
+
     }
 }
