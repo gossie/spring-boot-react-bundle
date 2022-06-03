@@ -16,8 +16,9 @@ public class TodoService {
         return todoRepository.findAll();
     }
 
-    public void addTodo(Todo todo) {
-        todoRepository.save(todo);
+    public Todo addTodo(Todo todo) {
+        var tmp = Optional.ofNullable(todoRepository.save(todo));
+        return tmp.orElse(todo);
     }
 
     public Optional<Todo> deleteTodo(String id) {

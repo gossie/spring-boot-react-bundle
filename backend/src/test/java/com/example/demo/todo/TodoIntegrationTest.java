@@ -21,11 +21,10 @@ public class TodoIntegrationTest {
 
     @Test
     public void integrationTest(){
-        // initial get todos via api should be empty
         ResponseEntity<Todo[]> todoArrayResponse;
         ResponseEntity<Todo> todoResponse;
 
-
+        // initial get todos via api should be empty
         todoArrayResponse = restTemplate.getForEntity("/api/kanban", Todo[].class);
         assertThat(todoArrayResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(todoArrayResponse.getBody()).isEmpty();
@@ -38,7 +37,20 @@ public class TodoIntegrationTest {
         for(Todo t: todos){
             todoResponse = restTemplate.postForEntity("/api/kanban", t, Todo.class);
             assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+            assertThat(todoResponse.getBody()).isEqualTo(t);
         }
+
+        // add bad todo
+        Todo todoForBadRequest = new Todo(null, null, null);
+        todoResponse = restTemplate.postForEntity("/api/kanban", todoForBadRequest, Todo.class);
+        assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(todoResponse.getBody()).isEqualTo(todoForBadRequest);
+
+        todoForBadRequest = new Todo("", "", null);
+        todoResponse = restTemplate.postForEntity("/api/kanban", todoForBadRequest, Todo.class);
+        assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(todoResponse.getBody()).isEqualTo(todoForBadRequest);
+
 
         // find those todos again via api
         todoArrayResponse = restTemplate.getForEntity("/api/kanban", Todo[].class);
@@ -78,6 +90,11 @@ public class TodoIntegrationTest {
 
         // same but for todo not in db
         todoResponse = restTemplate.exchange("/api/kanban/next", HttpMethod.PUT, new HttpEntity<>(todo2), Todo.class);
+        assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(todoResponse.getBody()).isNull();
+
+        // getTodoById for not existent
+        todoResponse = restTemplate.getForEntity("/api/kanban/" + todo2.getId(), Todo.class);
         assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         assertThat(todoResponse.getBody()).isNull();
 

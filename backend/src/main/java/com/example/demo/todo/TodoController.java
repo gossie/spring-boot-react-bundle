@@ -25,16 +25,22 @@ public class TodoController {
         return ResponseEntity.of(todoService.getTodoById(id));
     }
 
+
+    /**
+     * @param todo as RequestBody
+     * @return ResponseEntity body is the previously saved version
+     */
     @PutMapping
     public ResponseEntity<Todo> saveTodoChanges(@RequestBody Todo todo){
         return ResponseEntity.of(Optional.ofNullable(todoService.saveTodoChanges(todo)));
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addTodo(@RequestBody Todo todo){
-        // TODO add checks for missing fields?
-        todoService.addTodo(todo);
+    public ResponseEntity<Todo> addTodo(@RequestBody Todo todo){
+        if(todo.getTask()==null || todo.getTask().equals("")){
+            return ResponseEntity.badRequest().body(todo);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(todoService.addTodo(todo));
     }
 
     @DeleteMapping("/{id}")
