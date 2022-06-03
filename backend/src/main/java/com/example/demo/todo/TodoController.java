@@ -2,6 +2,7 @@ package com.example.demo.todo;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,9 +28,10 @@ public class TodoController {
     }
 
     @DeleteMapping("/{id}")
-    public Optional<Todo> deleteTodo(@PathVariable String id){
+    public ResponseEntity<Todo> deleteTodo(@PathVariable String id){
         // TODO check for not existent
-        return todoService.deleteTodo(id);
+
+        return ResponseEntity.of(todoService.deleteTodo(id));
     }
 
 }

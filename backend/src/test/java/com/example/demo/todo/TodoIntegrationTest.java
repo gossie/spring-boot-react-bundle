@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -46,5 +48,21 @@ public class TodoIntegrationTest {
         responseEntity = restTemplate.getForEntity("/api/kanban", Todo[].class);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).containsExactlyInAnyOrderElementsOf(List.of(todo1, todo2));
+
+        // delete todo2 with restTemplate.exchange for statusCode etc
+        var deleteResponse = restTemplate.exchange("/api/kanban/{id}", HttpMethod.DELETE, new HttpEntity<>(todo2), Todo.class, todo2.getId());
+        assertThat(deleteResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(deleteResponse.getBody()).isEqualTo(todo2);
+
+        // check if deleted
+        responseEntity = restTemplate.getForEntity("/api/kanban", Todo[].class);
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).containsExactlyInAnyOrderElementsOf(List.of(todo1));
+
+        // try to delete not existent todo
+        deleteResponse = restTemplate.exchange("/api/kanban/{id}", HttpMethod.DELETE, new HttpEntity<>(todo2), Todo.class, todo2.getId());
+        assertThat(deleteResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(deleteResponse.getBody()).isNull();
+
     }
 }
