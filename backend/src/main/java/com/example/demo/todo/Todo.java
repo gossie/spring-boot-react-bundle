@@ -15,7 +15,4 @@ public class Todo {
     private String task;
     private TodoStatus status;
 
-    public String getStatus(){
-        return status.toString();
-    }
 }
