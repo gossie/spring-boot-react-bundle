@@ -32,4 +32,16 @@ public class TodoService {
         }
         return todoTmp;
     }
+
+    public Optional<Todo> getTodoById(String id) {
+
+        return todoRepository.findById(id);
+    }
+
+    public Todo saveTodoChanges(Todo todo) {
+        if(todoRepository.findById(todo.getId()).isPresent()){
+            return todoRepository.save(todo);
+        }
+        return null;
+    }
 }

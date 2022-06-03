@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class TodoServiceUnitTest {
 
@@ -72,5 +71,34 @@ class TodoServiceUnitTest {
         assertThat(todoReturn.get()).extracting(Todo::getId).isEqualTo(todo1.getId());
         assertThat(todoReturn.get()).extracting(Todo::getStatus).isEqualTo(TodoStatus.OPEN);
 
+    }
+
+    @Test
+    void getTodoById() {
+        TodoRepository mockedTodoRepository = Mockito.mock(TodoRepository.class);
+        TodoService todoService = new TodoService(mockedTodoRepository);
+        Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
+
+        when(mockedTodoRepository.findById(todo1.getId())).thenReturn(Optional.ofNullable(todo1));
+
+        var actual = todoService.getTodoById(todo1.getId());
+
+        assertThat(actual.get()).isEqualTo(todo1);
+    }
+
+    @Test // not really useful because todo1 is the same object the whole time ;)
+    void saveTodoChanges() {
+        TodoRepository mockedTodoRepository = Mockito.mock(TodoRepository.class);
+        TodoService todoService = new TodoService(mockedTodoRepository);
+        Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
+
+        when(mockedTodoRepository.findById(todo1.getId())).thenReturn(Optional.ofNullable(todo1));
+        when(mockedTodoRepository.save(todo1)).thenReturn(todo1);
+
+        var actual = todoService.saveTodoChanges(todo1);
+
+        assertThat(actual).isEqualTo(todo1);
+        verify(mockedTodoRepository).findById(todo1.getId());
+        verify(mockedTodoRepository).save(todo1);
     }
 }

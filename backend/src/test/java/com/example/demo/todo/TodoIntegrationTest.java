@@ -22,9 +22,13 @@ public class TodoIntegrationTest {
     @Test
     public void integrationTest(){
         // initial get todos via api should be empty
-        ResponseEntity<Todo[]> responseEntity = restTemplate.getForEntity("/api/kanban", Todo[].class);
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isEmpty();
+        ResponseEntity<Todo[]> todoArrayResponse;
+        ResponseEntity<Todo> todoResponse;
+
+
+        todoArrayResponse = restTemplate.getForEntity("/api/kanban", Todo[].class);
+        assertThat(todoArrayResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(todoArrayResponse.getBody()).isEmpty();
 
         // add 3 todos via api
         Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
@@ -32,37 +36,63 @@ public class TodoIntegrationTest {
         Todo todo3 = new Todo("test todo 3", "todo 3", TodoStatus.DONE);
         var todos = new Todo[]{todo1, todo2, todo3};
         for(Todo t: todos){
-            ResponseEntity<Todo> responseEntityPost = restTemplate.postForEntity("/api/kanban", t, Todo.class);
-            assertThat(responseEntityPost.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+            todoResponse = restTemplate.postForEntity("/api/kanban", t, Todo.class);
+            assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         }
 
         // find those todos again via api
-        responseEntity = restTemplate.getForEntity("/api/kanban", Todo[].class);
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).containsExactlyInAnyOrderElementsOf(Arrays.asList(todos));
+        todoArrayResponse = restTemplate.getForEntity("/api/kanban", Todo[].class);
+        assertThat(todoArrayResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(todoArrayResponse.getBody()).containsExactlyInAnyOrderElementsOf(Arrays.asList(todos));
 
         // delete one todo
         restTemplate.delete("/api/kanban/" + todo3.getId());
 
         // check if deleted
-        responseEntity = restTemplate.getForEntity("/api/kanban", Todo[].class);
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).containsExactlyInAnyOrderElementsOf(List.of(todo1, todo2));
+        todoArrayResponse = restTemplate.getForEntity("/api/kanban", Todo[].class);
+        assertThat(todoArrayResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(todoArrayResponse.getBody()).containsExactlyInAnyOrderElementsOf(List.of(todo1, todo2));
 
         // delete todo2 with restTemplate.exchange for statusCode etc
-        var deleteResponse = restTemplate.exchange("/api/kanban/{id}", HttpMethod.DELETE, new HttpEntity<>(todo2), Todo.class, todo2.getId());
-        assertThat(deleteResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(deleteResponse.getBody()).isEqualTo(todo2);
+        todoResponse = restTemplate.exchange("/api/kanban/{id}", HttpMethod.DELETE, new HttpEntity<>(todo2), Todo.class, todo2.getId());
+        assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(todoResponse.getBody()).isEqualTo(todo2);
 
         // check if deleted
-        responseEntity = restTemplate.getForEntity("/api/kanban", Todo[].class);
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).containsExactlyInAnyOrderElementsOf(List.of(todo1));
+        todoArrayResponse = restTemplate.getForEntity("/api/kanban", Todo[].class);
+        assertThat(todoArrayResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(todoArrayResponse.getBody()).containsExactlyInAnyOrderElementsOf(List.of(todo1));
 
         // try to delete not existent todo
-        deleteResponse = restTemplate.exchange("/api/kanban/{id}", HttpMethod.DELETE, new HttpEntity<>(todo2), Todo.class, todo2.getId());
-        assertThat(deleteResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        assertThat(deleteResponse.getBody()).isNull();
+        todoResponse = restTemplate.exchange("/api/kanban/{id}", HttpMethod.DELETE, new HttpEntity<>(todo2), Todo.class, todo2.getId());
+        assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(todoResponse.getBody()).isNull();
 
+        // move task to next status
+        todoResponse = restTemplate.exchange("/api/kanban/next", HttpMethod.PUT, new HttpEntity<>(todo1), Todo.class);
+        assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        // using getTodoById api here
+        todoResponse = restTemplate.getForEntity("/api/kanban/" + todo1.getId(), Todo.class);
+        assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(todoResponse.getBody().getStatus()).isEqualTo(TodoStatus.IN_PROGRESS);
+
+        // same but for todo not in db
+        todoResponse = restTemplate.exchange("/api/kanban/next", HttpMethod.PUT, new HttpEntity<>(todo2), Todo.class);
+        assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(todoResponse.getBody()).isNull();
+
+        // change todo1 and save to db
+        todo1.setTask("the new task");
+        todoResponse = restTemplate.exchange("/api/kanban", HttpMethod.PUT, new HttpEntity<>(todo1), Todo.class);
+        assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(todoResponse.getBody().getId()).isEqualTo(todo1.getId());
+        todoResponse = restTemplate.getForEntity("/api/kanban/" + todo1.getId(), Todo.class);
+        assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(todoResponse.getBody().getTask()).isEqualTo("the new task");
+
+        // try to save task changes not in db
+        todoResponse = restTemplate.exchange("/api/kanban", HttpMethod.PUT, new HttpEntity<>(todo2), Todo.class);
+        assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(todoResponse.getBody()).isNull();
     }
 }

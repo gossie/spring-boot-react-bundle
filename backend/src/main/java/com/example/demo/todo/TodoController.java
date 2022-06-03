@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -17,6 +18,16 @@ public class TodoController {
     @GetMapping
     public List<Todo> getTodos(){
         return todoService.getAllTodos();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Todo> getTodoById(@PathVariable String id){
+        return ResponseEntity.of(todoService.getTodoById(id));
+    }
+
+    @PutMapping
+    public ResponseEntity<Todo> saveTodoChanges(@RequestBody Todo todo){
+        return ResponseEntity.of(Optional.ofNullable(todoService.saveTodoChanges(todo)));
     }
 
     @PostMapping
@@ -34,7 +45,7 @@ public class TodoController {
     }
 
     @PutMapping("/next")
-    public ResponseEntity<Todo> moveTodoToNext(@RequestBody Todo todo){
+    public ResponseEntity<Todo> moveTodoToNextStatus(@RequestBody Todo todo){
 
         return ResponseEntity.of(todoService.toggleTodoStatus(todo));
     }

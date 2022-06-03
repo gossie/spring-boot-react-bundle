@@ -16,8 +16,8 @@ public class TodoRepository {
         return todos.values().stream().toList();
     }
 
-    public void save(Todo todo) {
-        todos.put(todo.getId(), todo);
+    public Todo save(Todo todo) {
+        return todos.put(todo.getId(), todo);
     }
 
     public Optional<Todo> delete(String id) {
