@@ -81,7 +81,7 @@ public class TaskServiceTest {
 
     @Test
     void shouldEditTask(){
-        //given
+        //Given
         Task t1 = new Task("Aufräumen", "Zimmer aufräumen");
         Task t2 = new Task("Aufräumen", "Zimmer aufräumen");
         TaskRepo taskRepo = mock(TaskRepo.class);
