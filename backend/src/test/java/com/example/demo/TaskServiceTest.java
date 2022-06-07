@@ -37,6 +37,7 @@ public class TaskServiceTest {
         //then
         Assertions.assertThat(actual)
                 .isEqualTo(List.of(t1, t2));
+        Assertions.assertThat(actual).hasSize(2);
     }
 
     @Test
