@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import KanbanBoard from "./components/KanbanBoard";
+import "./App.css"
 
 function App() {
 
     return (
         <div>
-            Hallo
+            <KanbanBoard/>
         </div>
     );
 }

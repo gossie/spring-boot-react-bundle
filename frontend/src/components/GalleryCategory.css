@@ -1,0 +1,10 @@
+.gallery-category {
+    text-align: center;
+    /*background-color: #000066;*/
+}
+
+.gallery-category>h2 {
+    background-color: #444444;
+    margin: 15px;
+    border-radius: 20px;
+}
