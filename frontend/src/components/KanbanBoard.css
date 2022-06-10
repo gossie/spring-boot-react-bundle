@@ -5,3 +5,8 @@
 button {
     background-color: antiquewhite;
 }
+
+.gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}

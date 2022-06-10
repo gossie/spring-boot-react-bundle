@@ -3,6 +3,7 @@
     background-color: #000066;
     margin: 15px;
     border-radius: 20px;
+    border: 1px indigo solid;
 }
 
 .item p{
