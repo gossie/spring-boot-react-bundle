@@ -4,7 +4,7 @@ import "./GalleryItem.css"
 interface GalleryItemProps {
     todo: Todo;
     fetchAll: ()=>void;
-    editItem: (s: string)=>void;
+    editItem: (id: string)=>void;
 }
 
 export default function GalleryItem (props: GalleryItemProps) {
@@ -73,10 +73,6 @@ export default function GalleryItem (props: GalleryItemProps) {
 
     }
 
-    function edit() {
-        props.editItem(props.todo.id);
-    }
-
     return (
         <div className="item">
                 <h2>{props.todo.task}</h2>
@@ -88,7 +84,7 @@ export default function GalleryItem (props: GalleryItemProps) {
                 <button onClick={() => prevStatus()}>prev</button>
             }
             {
-                <button onClick={() => edit()}>edit</button>
+                <button onClick={() => props.editItem(props.todo.id)}>edit</button>
             }
             {
                 (props?.todo?.status === "OPEN" || props?.todo?.status==="IN_PROGRESS") &&

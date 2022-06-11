@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {Todo} from "../model";
+import "./EditItem.css"
 
 interface EditItemProps {
     fetchAll: () => void;
@@ -74,9 +75,14 @@ export default function EditItem (props: EditItemProps) {
             });
     }
 
+    function cancel() {
+        props.setEditMode("view");
+    }
+
     return (
         <div>
-            <label htmlFor="task">Task: </label>
+
+            <label htmlFor="task">{"           "}Task: </label>
             <input id="task" type="text" value={task}
                    onChange={ev => {
                        setTask(ev.target.value)
@@ -90,15 +96,39 @@ export default function EditItem (props: EditItemProps) {
                        console.log(`set description to ${ev.target.value}`)
                    }}/>
             <br/>
+            <button onClick={() => cancel()}>cancel</button>
             {
                 props.editMode === "new" &&
-                    <button onClick={() => addNewTodo()}>save</button>
+                <button onClick={() => addNewTodo()}>save</button>
             }
             {
                 props.editMode === "edit" &&
-                    <button onClick={() => editTodo()}>edit</button>
+                <button onClick={() => editTodo()}>edit</button>
             }
 
+            {/*<div className="inputalign">*/}
+            {/*    <label htmlFor="task">{"           "}Task: </label>*/}
+            {/*    <input id="task" type="text" value={task}*/}
+            {/*           onChange={ev => {*/}
+            {/*               setTask(ev.target.value)*/}
+            {/*               console.log(`set task to ${ev.target.value}`)*/}
+            {/*           }}/>*/}
+            {/*    <label htmlFor="desc">Description: </label>*/}
+            {/*    <input id="desc" type="text" value={description}*/}
+            {/*           onChange={ev => {*/}
+            {/*               setDescription(ev.target.value)*/}
+            {/*               console.log(`set description to ${ev.target.value}`)*/}
+            {/*           }}/>*/}
+            {/*    <button onClick={() => cancel()}>cancel</button>*/}
+            {/*    {*/}
+            {/*        props.editMode === "new" &&*/}
+            {/*        <button onClick={() => addNewTodo()}>save</button>*/}
+            {/*    }*/}
+            {/*    {*/}
+            {/*        props.editMode === "edit" &&*/}
+            {/*        <button onClick={() => editTodo()}>edit</button>*/}
+            {/*    }*/}
+            {/*</div>*/}
         </div>
     )
 }
