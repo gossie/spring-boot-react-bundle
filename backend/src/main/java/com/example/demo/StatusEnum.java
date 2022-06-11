@@ -2,22 +2,16 @@ package com.example.demo;
 
 public enum StatusEnum {
 
-    OPEN("OPEN"),
-    IN_PROGRESS("IN_PROGRESS"),
-    DONE("DONE");
-
-    private String status;
-
-    StatusEnum(String status) {
-        this.status = status;
-    }
+    OPEN,
+    IN_PROGRESS,
+    DONE;
 
     public StatusEnum next() {
-        switch (status) {
-            case "OPEN" -> {
+        switch (this) {
+            case OPEN -> {
                 return StatusEnum.IN_PROGRESS;
             }
-            case "IN_PROGRESS" -> {
+            case IN_PROGRESS -> {
                 return StatusEnum.DONE;
             }
             default -> {
@@ -27,11 +21,11 @@ public enum StatusEnum {
     }
 
     public StatusEnum prev() {
-        switch (status) {
-            case "IN_PROGRESS" -> {
+        switch (this) {
+            case IN_PROGRESS -> {
                 return StatusEnum.OPEN;
             }
-            case "DONE" -> {
+            case DONE -> {
                 return StatusEnum.IN_PROGRESS;
             }
             default -> {

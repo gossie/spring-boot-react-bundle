@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/kanban")
 @RequiredArgsConstructor
@@ -32,7 +33,7 @@ public class KanbanController {
     }
 
     @PutMapping
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Item> editItem(@RequestBody Item item) {
         try {
             return ResponseEntity.ok(kanbanService.editItem(item));
@@ -42,7 +43,7 @@ public class KanbanController {
     }
 
     @PutMapping("/next")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Item> moveToNext(@RequestBody Item item) {
         try {
             return ResponseEntity.ok(kanbanService.moveToNext(item));
@@ -52,7 +53,7 @@ public class KanbanController {
     }
 
     @PutMapping("/prev")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Item> moveToPrev(@RequestBody Item item) {
         try {
             return ResponseEntity.ok(kanbanService.moveToPrev(item));

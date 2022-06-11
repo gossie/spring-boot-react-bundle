@@ -1,24 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import KanbanBoard from "./Board/KanbanBoard";
+import InputField from "./Input/InputField";
 
 function App() {
 
-    const [greeting, setGreeting] = useState('')
-
-    useEffect(() => {
-        fetch('/api/greeting', {
-            method: 'GET',
-            headers: {
-                'Accept': 'text/plain'
-            }
-        })
-            .then(response => response.text())
-            .then(text => setGreeting(text))
-            .catch(err => setGreeting('Da ist etwas schief gelaufen'));
-    }, []);
-
     return (
         <div>
-            {greeting}
+            <KanbanBoard/>
         </div>
     );
 }
