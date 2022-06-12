@@ -16,8 +16,11 @@ export default function InputField(props: KanbanCardProps) {
             task: inputTask,
             description: inputDescription,
             status: Status.OPEN
+        }).then(() => {
+            setTask("");
+            setDescription("");
+            props.onTaskChange();
         })
-            .then(() => props.onTaskChange());
     }
 
     return (
