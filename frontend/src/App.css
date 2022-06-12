@@ -2,3 +2,8 @@ body {
     background-color: #FFE5B4;
     font-family: 'Titillium Web', sans-serif;;
 }
+
+h1 {
+    text-align: center;
+    margin-bottom: 3rem;
+}

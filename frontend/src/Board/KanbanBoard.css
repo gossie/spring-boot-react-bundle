@@ -1,10 +1,14 @@
-.spaß-mit-columns {
+.column-wrapper {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
     justify-items: center;
 }
 
 h2 {
-    font-family: "Comic Sans MS", sans-serif;
+    font-weight: bold;
+}
+
+.board-elm {
+    text-align: center;
 }

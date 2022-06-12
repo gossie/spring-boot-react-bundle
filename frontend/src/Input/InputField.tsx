@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {Status, TaskItem} from "../model";
+import "./InputField.css"
 
 interface KanbanCardProps {
     onTaskChange: () => void;
@@ -24,7 +25,7 @@ export default function InputField(props: KanbanCardProps) {
     }
 
     return (
-        <div>
+        <div className="input-field">
             <div>
                 <label htmlFor="task">Task: </label>
                 <input name="task" value={inputTask} onChange={ev => setTask(ev.target.value)}/>

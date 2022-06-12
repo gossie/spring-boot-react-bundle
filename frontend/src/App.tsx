@@ -10,7 +10,7 @@ function App() {
     return (
         <BrowserRouter>
             <div>
-                <h2>Kanban Board</h2>
+                <h1>Kanban Board</h1>
                 <Routes>
                     <Route path="/" element={<KanbanBoard/>}/>
                     <Route path="/:id" element={<EditField/>}/>

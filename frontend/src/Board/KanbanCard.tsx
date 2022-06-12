@@ -32,15 +32,9 @@ export default function KanbanCard(props: KanbanCardProps) {
             .then(() => props.onTaskChange());
     }
 
-    const editTask = () => {
-        props.setEditMode();
-    };
 
     return (
         <div>
-            {/*{props.editMode &&*/}
-            {/*    <EditField closeEditMode={props.closeEditMode}/>*/}
-            {/*}*/}
             <span>Task: </span>{props.item.task}
             <br/>
             <span>Description: </span>{props.item.description}
@@ -49,7 +43,6 @@ export default function KanbanCard(props: KanbanCardProps) {
                     <button onClick={deleteTask}>delete</button>
                 :   <button onClick={prevState}>prev</button>}
 
-                {/*<Link to={"edit"} property={props.item.id}><button onClick={editTask}>edit</button></Link>*/}
                 <NavLink to={`/${props.item.id}`}><button>edit</button></NavLink>
                 {props.item.status !== Status.DONE && <button onClick={nextState}>next</button>}
                 {props.item.status === Status.DONE && <button onClick={deleteTask}>delete</button>}

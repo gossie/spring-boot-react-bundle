@@ -1,0 +1,20 @@
+label {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+input {
+    width: 10rem;
+    font-size: 1rem;
+    border-radius: 8px;
+}
+
+.input-field {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.input-field button {
+    width: 10rem;
+    font-size: 1rem;
+}

@@ -27,7 +27,6 @@ export default function KanbanBoard() {
         fetch(url, {method: "GET"})
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 setTaskArray(data);
             })
     }
@@ -57,16 +56,16 @@ export default function KanbanBoard() {
         <div>
             <div>
                 <InputField onTaskChange={fetchTasks}/>
-                <div className={"spaß-mit-columns"}>
-                    <div>
+                <div className={"column-wrapper"}>
+                    <div className="board-elm">
                         <h2>OPEN</h2>
                         {componentsOpen}
                     </div>
-                    <div>
+                    <div className="board-elm">
                         <h2>In Progress</h2>
                         {componentsInProgress}
                     </div>
-                    <div>
+                    <div className="board-elm">
                         <h2>Done</h2>
                         {componentsDone}
                     </div>

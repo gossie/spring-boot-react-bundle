@@ -1,18 +1,17 @@
 import {Component, SetStateAction, useEffect, useState} from "react";
 import {default as axios} from "axios";
-import {Status} from "../model";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {Status, TaskItem} from "../model";
+import {Link, NavLink, useNavigate, useParams} from "react-router-dom";
 import path from "path";
-
-// interface KanbanCardProps{
-//     closeEditMode: () => void;
-// }
+import KanbanCard from "../Board/KanbanCard";
+import "./EditField.css"
 
 export default function EditField() {
+    let navigate = useNavigate();
     const axios = require("axios").default;
 
     const {id} = useParams();
-    const [item, setItem] = useState();
+    const [item, setItem] = useState({} as TaskItem);
     const [task, setTask] = useState("");
     const [description, setDescription] = useState("");
 
@@ -23,16 +22,21 @@ export default function EditField() {
                 setItem(data);
                 setTask(data.task);
                 setDescription(data.description);
-                console.log(data);
             })
     }, [])
 
     const saveChanges = () => {
-
+        axios.put("http://localhost:8080/api/kanban", {
+            id: item.id,
+            task: task,
+            description: description,
+            status: item.status
+        })
+            .then(() => navigate("/"))
     }
 
     return (
-        <div>
+        <div className="edit-field">
             <div>
                 <label htmlFor="task">Task: </label>
                 <input name="task" value={task} onChange={ev => setTask(ev.target.value)}/>
@@ -41,7 +45,7 @@ export default function EditField() {
                 <label htmlFor="description">Description: </label>
                 <input name="description" value={description} onChange={ev => setDescription(ev.target.value)}/>
             </div>
-            <Link to="/"><button>addTask</button></Link>
+            <button onClick={saveChanges}>Edit</button>
         </div>
     )
 }
