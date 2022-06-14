@@ -1,26 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import Header from "./components/Header";
+import InputForm from "./components/InputForm";
+import KanbanGallery from "./components/KanbanGallery";
+import {useEffect, useState} from "react";
+import axios, {AxiosResponse} from "axios";
+import {Task} from "./service/model"
+import {fetchAllTasks} from "./service/apiServices";
 
-function App() {
+export default function App(){
 
-    const [greeting, setGreeting] = useState('')
+    const [tasks, setTasks] = useState<Array<Task>>([]);
 
-    useEffect(() => {
-        fetch('/api/greeting', {
-            method: 'GET',
-            headers: {
-                'Accept': 'text/plain'
-            }
-        })
-            .then(response => response.text())
-            .then(text => setGreeting(text))
-            .catch(err => setGreeting('Da ist etwas schief gelaufen'));
-    }, []);
+    useEffect(()=>{
+        fetchAll()
+    },[])
 
-    return (
+    const fetchAll = ()=>{
+        fetchAllTasks()
+            .then((tasksFromDb:Array<Task>) => setTasks(tasksFromDb))
+    }
+
+    return(
         <div>
-            {greeting}
+            <Header/>
+            <InputForm onTaskCreation={fetchAll}/>
+            <KanbanGallery tasks={tasks} onTaskManipulation={fetchAll}/>
         </div>
-    );
+    )
 }
-
-export default App;
