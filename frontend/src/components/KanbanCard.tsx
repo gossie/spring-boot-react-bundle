@@ -1,6 +1,7 @@
 import {Task} from "../service/model";
 import {deleteTask, demoteTask, editTask, promoteTask} from "../service/apiServices";
 import {useNavigate} from "react-router-dom";
+import "./KanbanCard.css"
 
 interface KanbanCardProps{
     task: Task;
@@ -32,11 +33,11 @@ export default function KanbanCard(props: KanbanCardProps){
     }
 
     return(
-        <div>
+        <div className={"kanbanCard"}>
             <p>{props.task.task}</p>
             <p>{props.task.description}</p>
             {props.task.status === "OPEN" ? <button onClick={deleteCard}>Delete</button> : <button onClick={demoteCard}>Demote</button>}
-            <button onClick={()=> nav("/" + props.task.id)}>Edit</button>
+            <button className={"editbutton"} onClick={()=> nav("/" + props.task.id)}>Edit</button>
             {props.task.status === "DONE" ? <button onClick={deleteCard}>Delete</button> : <button onClick={promoteCard}>Promote</button>}
         </div>
     )

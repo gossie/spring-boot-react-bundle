@@ -1,0 +1,12 @@
+
+
+.kanbanCard{
+    margin: auto;
+    background-color: white;
+    border-radius: 15px;
+    width: 250px;
+}
+
+.editbutton{
+    margin: 10px;
+}

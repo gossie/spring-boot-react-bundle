@@ -1,7 +1,10 @@
-.inputform{
+
+
+.headeredit{
     display: flex;
     justify-content: center;
-    margin: 10px;
+    color: white;
+    text-shadow: black 0.1em 0.1em 0.1em;
 }
 
 .input{
@@ -10,14 +13,14 @@
     margin: 10px;
 }
 
-.inputfield{
+.inputedit{
     text-align: center;
     height: 30px;
     border-top-left-radius: 20px;
     border-bottom-right-radius: 20px;
 }
 
-.inputformbutton{
+.button{
     display: flex;
     justify-content: center;
     margin: 10px;

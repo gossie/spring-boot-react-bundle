@@ -1,6 +1,6 @@
 import KanbanColumn from "./KanbanColumn";
-import {useEffect} from "react";
 import {Task} from "../service/model"
+import "./KanbanGallery.css"
 
 interface KanbanGalleryProps{
     tasks: Array<Task>
@@ -15,10 +15,10 @@ export default function KanbanGallery(props: KanbanGalleryProps){
 
 
     return(
-        <div>
-            <KanbanColumn headline={"Open"} tasks={openTasks} onTaskManipulation={props.onTaskManipulation}/>
-            <KanbanColumn headline={"In Progress"} tasks={tasksInProgress} onTaskManipulation={props.onTaskManipulation}/>
-            <KanbanColumn headline={"Done"} tasks={doneTasks} onTaskManipulation={props.onTaskManipulation}/>
+        <div className={"collumns"}>
+            <div className={"open"}><KanbanColumn headline={"Open"} tasks={openTasks} onTaskManipulation={props.onTaskManipulation}/></div>
+            <div className={"inpro"}><KanbanColumn headline={"In Progress"} tasks={tasksInProgress} onTaskManipulation={props.onTaskManipulation}/></div>
+            <div className={"done"}><KanbanColumn headline={"Done"} tasks={doneTasks} onTaskManipulation={props.onTaskManipulation}/></div>
         </div>
     )
 }

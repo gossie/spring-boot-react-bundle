@@ -2,34 +2,40 @@ import {FormEvent, useState} from "react";
 import {createTask} from "../service/apiServices";
 import "./InputForm.css"
 
-interface InputFormProps{
-    onTaskCreation: ()=> void;
+interface InputFormProps {
+    onTaskCreation: () => void;
 }
 
-export default function InputForm(props: InputFormProps){
+export default function InputForm(props: InputFormProps) {
 
     const [task, setTask] = useState("")
     const [description, setDescription] = useState("")
 
 
-    const submitForm = (ev: FormEvent)=>{
+    const submitForm = (ev: FormEvent) => {
         ev.preventDefault()
         createTask({task: task, description: description, status: "OPEN"})
-            .then(()=>{
+            .then(() => {
                 setTask("")
                 setDescription("")
                 props.onTaskCreation()
             })
     }
 
-    return(
+    return (
         <div>
             <form onSubmit={submitForm}>
-                <input className={"inputform"} type="text" value={task} placeholder={"Task"} onChange={event => setTask(event.target.value)}/>
-                <br/>
-                <input className={"inputform"} type="text" value={description} placeholder={"Description"} onChange={event => setDescription(event.target.value)}/>
-                <br/>
-                <input className={"inputformbutton"} type="submit" value={"Confirm"}/>
+                <span className={"input"}>
+                    <input className={"inputfield"} type="text" value={task} placeholder={"Task"}
+                           onChange={event => setTask(event.target.value)}/>
+                </span>
+                <span className={"input"}>
+                    <input className={"inputfield"} type="text" value={description} placeholder={"Description"}
+                       onChange={event => setDescription(event.target.value)}/>
+                </span>
+                <span className={"inputformbutton"}>
+                    <input type="submit" value={"Confirm"}/>
+                </span>
             </form>
         </div>
     )
