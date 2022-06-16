@@ -1,8 +1,9 @@
+import "./Header.css"
 
 export default function Header(){
     return(
-        <div className={"header"}>
-            <h1>Überschrift</h1>
+        <div>
+            <h1 className={"header"}>ToDo-App</h1>
         </div>
     )
 }

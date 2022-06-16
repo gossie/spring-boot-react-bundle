@@ -21,3 +21,11 @@ export function promoteTask(task: Task){
 export function demoteTask(task: Task){
     return axios.put(`http://localhost:8080/api/kanban/prev`, task)
 }
+
+export function editTask(task: Task){
+    return axios.put(`http://localhost:8080/api/kanban/`, task)
+}
+
+export function getTask(taskId: string){
+    return axios.get(`http://localhost:8080/api/kanban/` + taskId)
+}
