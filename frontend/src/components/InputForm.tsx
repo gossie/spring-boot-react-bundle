@@ -32,7 +32,6 @@ export default function InputForm(props: InputFormProps) {
                 props.onTaskCreation()
             })
             .catch(()=> setErrorMessage("The task could not be crated"))
-
     }
 
     return (

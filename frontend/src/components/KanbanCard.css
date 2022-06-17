@@ -3,7 +3,8 @@
 .kanbanCard{
     margin: auto;
     background-color: white;
-    border-radius: 15px;
+    border-bottom-right-radius: 50px;
+    border-top-left-radius: 50px;
     width: 250px;
 }
 

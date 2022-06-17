@@ -1,43 +1,31 @@
-import {fireEvent, render, screen, waitFor} from "@testing-library/react";
+import {Task} from "../service/model";
+import {render, screen, waitFor} from "@testing-library/react";
+import {fetchAllTasks} from "../service/apiServices";
+import KanbanCard from "./KanbanCard";
+import {MemoryRouter} from "react-router-dom";
 import axios from "axios";
-import InputForm from "./InputForm";
-import KanbanGallery from "./KanbanGallery";
-import MainPage from "../pages/MainPage";
 
-test("that input is working", async ()=>{
-    jest.spyOn(axios, "get").mockImplementation((url: string) => {
-        expect(url).toEqual("http://localhost:8080/api/kanban");
-        return Promise.resolve({
-            results: [
-                {
-                    id: "1",
-                    task: "Aufräumen",
-                    description: "Küche",
-                    status: "OPEN"
-                },
-                {
-                    id: "2",
-                    task: "Staubsaugen",
-                    description: "Wohnzimmer",
-                    status: "OPEN"
-                },
-                {
-                    id: "3",
-                    task: "Einkaufen",
-                    description: "Brot",
-                    status: "OPEN"
-                }
-            ]
-        })
-    });
+test("that task is rendered", ()=>{
 
-    render(<MainPage/>)
 
-    await waitFor(()=>{
-        expect(screen.getByTestId("task-1")).toBeDefined()
-        expect(screen.getByTestId("task-2")).toBeDefined()
-        expect(screen.getByTestId("task-3")).toBeDefined()
+    const dummyCallBack = jest.fn(()=>{
+
     })
 
+    //Given
+
+    const task: Task ={
+        id: "1",
+        task: "Saugen",
+        description: "Wohnzimmer",
+        status: "OPEN"
     }
-)
+
+    //When
+    render(<MemoryRouter><KanbanCard task={task} onTaskManipulation={dummyCallBack}/></MemoryRouter>)
+
+    //Then
+    expect(screen.getByTestId("task").textContent).toEqual("Saugen")
+    expect(screen.getByTestId("description").textContent).toEqual("Wohnzimmer")
+    expect(dummyCallBack).not.toHaveBeenCalled()
+})
