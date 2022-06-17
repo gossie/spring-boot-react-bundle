@@ -55,6 +55,7 @@ class TodoServiceUnitTest {
         TodoService todoService = new TodoService(mockedTodoRepository);
         Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
         when(mockedTodoRepository.findById(todo1.getId())).thenReturn(Optional.of(todo1));
+        when(mockedTodoRepository.save(todo1)).thenReturn(todo1);
 
         Optional<Todo> todoReturn = todoService.nextTodoStatus(todo1);
 
@@ -80,6 +81,7 @@ class TodoServiceUnitTest {
         TodoService todoService = new TodoService(mockedTodoRepository);
         Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
         when(mockedTodoRepository.findById(todo1.getId())).thenReturn(Optional.of(todo1));
+        when(mockedTodoRepository.save(todo1)).thenReturn(todo1);
 
         Optional<Todo> todoReturn = todoService.prevTodoStatus(todo1);
 

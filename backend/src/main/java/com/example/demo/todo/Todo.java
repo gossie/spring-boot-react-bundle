@@ -15,4 +15,8 @@ public class Todo {
     private String task;
     private TodoStatus status;
 
+    public Todo setStatus(TodoStatus todoStatus){
+        this.status = todoStatus;
+        return this;
+    }
 }

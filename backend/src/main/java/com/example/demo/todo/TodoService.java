@@ -17,8 +17,7 @@ public class TodoService {
     }
 
     public Todo addTodo(Todo todo) {
-        var tmp = Optional.ofNullable(todoRepository.save(todo));
-        return tmp.orElse(todo);
+        return Optional.ofNullable(todoRepository.save(todo)).orElse(todo);
     }
 
     public Optional<Todo> deleteTodo(String id) {
@@ -26,21 +25,13 @@ public class TodoService {
     }
 
     public Optional<Todo> nextTodoStatus(Todo todo) {
-        Optional<Todo> todoTmp = todoRepository.findById(todo.getId());
-        if(todoTmp.isPresent()) {
-            todoTmp.get().setStatus(todoTmp.get().getStatus().toggleStatus());
-            todoRepository.save(todoTmp.get());
-        }
-        return todoTmp;
+        return todoRepository.findById(todo.getId())
+                .map(todo1 -> todoRepository.save(todo1.setStatus(todo1.getStatus().toggleStatus())));
     }
 
     public Optional<Todo> prevTodoStatus(Todo todo) {
-        Optional<Todo> todoTmp = todoRepository.findById(todo.getId());
-        if(todoTmp.isPresent()) {
-            todoTmp.get().setStatus(todoTmp.get().getStatus().toggleStatus().toggleStatus());
-            todoRepository.save(todoTmp.get());
-        }
-        return todoTmp;
+        return todoRepository.findById(todo.getId())
+                .map(todo1 -> todoRepository.save(todo1.setStatus(todo1.getStatus().toggleStatus().toggleStatus())));
     }
 
     public Optional<Todo> getTodoById(String id) {

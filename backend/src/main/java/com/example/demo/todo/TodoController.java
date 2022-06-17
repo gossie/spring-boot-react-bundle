@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/kanban")
@@ -45,8 +46,6 @@ public class TodoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Todo> deleteTodo(@PathVariable String id){
-        // TODO check for not existent
-
         return ResponseEntity.of(todoService.deleteTodo(id));
     }
 
