@@ -1,5 +1,6 @@
 import {Todo} from "../model";
-import "./GalleryItem.css"
+import "./GalleryItem.css";
+import {deleteTask, moveTaskToNext, moveTaskToPrev} from "../apiService";
 
 interface GalleryItemProps {
     todo: Todo;
@@ -11,66 +12,25 @@ export default function GalleryItem (props: GalleryItemProps) {
 
 
     function nextStatus() {
-            console.log(`to next status: ${props.todo}`)
-
-            fetch('http://localhost:8080/api/kanban/next', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(props.todo),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                    props.fetchAll();
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-
+        console.log(`to next status: ${props.todo}`)
+        moveTaskToNext(props.todo)
+            .then(()=>props.fetchAll())
+            .catch((error) => console.error('Error:', error));
     }
 
     function prevStatus() {
         console.log(`to prev status: ${props.todo}`)
-
-        fetch('http://localhost:8080/api/kanban/prev', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(props.todo),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                props.fetchAll();
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-
+        moveTaskToPrev(props.todo)
+            .then(()=>props.fetchAll())
+            .catch((error) => console.error('Error:', error));
     }
 
     function deleteTodo() {
         console.log(`delete: ${props.todo}`)
 
-        fetch(`http://localhost:8080/api/kanban/${props.todo.id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(props.todo),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                props.fetchAll();
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-
+        deleteTask(props.todo.id!)
+            .then(()=>props.fetchAll())
+            .catch((error) => console.error('Error:', error));
     }
 
     return (
@@ -84,7 +44,7 @@ export default function GalleryItem (props: GalleryItemProps) {
                 <button onClick={() => prevStatus()}>prev</button>
             }
             {
-                <button onClick={() => props.editItem(props.todo.id)}>edit</button>
+                <button onClick={() => props.editItem(props.todo.id!)}>edit</button>
             }
             {
                 (props?.todo?.status === "OPEN" || props?.todo?.status==="IN_PROGRESS") &&

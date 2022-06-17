@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import EditItem from "./EditItem";
 import GalleryCategory from "./GalleryCategory";
 import {Todo} from "../model";
+import {getAllTasks} from "../apiService";
 
 export default function KanbanBoard () {
 
@@ -19,8 +20,7 @@ export default function KanbanBoard () {
 
     const getAllTodos = () => {
         console.log(`fetch all todos from: ${startUrl}`);
-        return fetch(startUrl)
-            .then(response => response.json())
+        return getAllTasks()
             .then((tds: Todo[]) => {
                 setTodos(tds);
                 console.log(tds);

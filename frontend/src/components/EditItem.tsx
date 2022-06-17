@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {Todo} from "../model";
 import "./EditItem.css"
+import {createNewTask, editTask, getTaskById} from "../apiService";
 
 interface EditItemProps {
     fetchAll: () => Promise<any>;
@@ -15,57 +16,58 @@ export default function EditItem (props: EditItemProps) {
     const [description, setDescription] = useState<string>("");
     const [status, setStatus] = useState<string>("");
 
+    const [errorMsg, setErrorMsg] = useState('')
+
+
+    useEffect(() => {
+        setTimeout(()=>setErrorMsg(""), 5000)
+    }, [errorMsg]);
+
     useEffect(()=>{
         if(props.editMode === "edit"){
-            getTaskById();
+            getTaskById1();
         }
     }, [props])
 
-    const getTaskById = () => {
+    const getTaskById1 = () => {
         console.log(`fetch todo by id`);
-        fetch(`http://localhost:8080/api/kanban/${props.editId}`)
-            .then(response => response.json())
-            .then((todo: Todo) => {
+        getTaskById(props.editId)
+            .then((todo: Todo) =>{
                 setTask(todo.task);
                 setDescription(todo.description);
                 setStatus(todo.status);
                 console.log(todo);
-            });
+            })
     }
 
     const addNewTodo = () => {
         console.log(`saving: ${task} ${description}`)
-
-        fetch('http://localhost:8080/api/kanban', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({task: task, description: description, status: "OPEN"}),
-        })
-            .then(response => response.json())
-            .then(() => props.fetchAll())
-            .then( ()=>props.setEditMode("view") )
+        createNewTask({task: task, description: description, status: "OPEN"})
+            .then(()=>props.fetchAll())
+            .then(()=>props.setEditMode("view"))
             .catch((error) => {
-                console.error('Error:', error);
+                if(error.response.status===422){
+                    setErrorMsg("Make sure your input is correct (task cannot be empty).");
+                }else{
+                    setErrorMsg(error.toString);
+                }
             });
     }
 
     function editTodo() {
         console.log(`edit: ${task} ${description}`)
 
-        fetch('http://localhost:8080/api/kanban', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({task: task, description: description, status: status, id: props.editId}),
-        })
-            .then(response => response.json())
-            .then(() => props.fetchAll())
-            .then( ()=>props.setEditMode("view"))
+        editTask({task: task, description: description, status: status, id: props.editId})
+            .then(()=>props.fetchAll())
+            .then(()=>props.setEditMode("view"))
             .catch((error) => {
-                console.error('Error:', error);
+                if (error.response.status===422) {
+                    setErrorMsg("Make sure your input is correct (task cannot be empty).");
+                } else if (error.response.status===404){
+                    setErrorMsg("Something went wrong: Task to edit could not be found");
+                }else{
+                    setErrorMsg(error.toString);
+                }
             });
     }
 
@@ -99,7 +101,9 @@ export default function EditItem (props: EditItemProps) {
                 props.editMode === "edit" &&
                 <button onClick={() => editTodo()}>edit</button>
             }
-
+            <div className="errormsg">
+                {errorMsg}
+            </div>
             {/*<div className="inputalign">*/}
             {/*    <label htmlFor="task">{"           "}Task: </label>*/}
             {/*    <input id="task" type="text" value={task}*/}
