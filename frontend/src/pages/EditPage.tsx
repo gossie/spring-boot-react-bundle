@@ -11,6 +11,7 @@ export default function EditPage() {
     const [todo, setTodo] = useState({} as Task)
     const [task, setTask] = useState("")
     const [description, setDescription] = useState("")
+    const [errorMessage, setErrormessage] = useState("")
 
     const nav = useNavigate()
 
@@ -23,6 +24,7 @@ export default function EditPage() {
                     setTask(data.task)
                     setDescription(data.description)
                 })
+                .catch(()=> setErrormessage("The task could not be loaded"))
         }
     }, [id])
 
@@ -49,6 +51,7 @@ export default function EditPage() {
                 <span className={"input"}><input className={"inputedit"} type="text" placeholder={"Description"} value={description}
                              onChange={event => setDescription(event.target.value)}/></span>
                 <span className={"button"}><button onClick={saveChange}>Save</button></span>
+                {errorMessage && <div className={"error"}>{errorMessage}</div>}
             </div>
         </div>
     )

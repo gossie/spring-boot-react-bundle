@@ -1,4 +1,4 @@
-import {FormEvent, useState} from "react";
+import {FormEvent, useEffect, useState} from "react";
 import {createTask} from "../service/apiServices";
 import "./InputForm.css"
 
@@ -8,8 +8,19 @@ interface InputFormProps {
 
 export default function InputForm(props: InputFormProps) {
 
-    const [task, setTask] = useState("")
-    const [description, setDescription] = useState("")
+    const [task, setTask] = useState(localStorage.getItem("task") ?? "")
+    const [description, setDescription] = useState(localStorage.getItem("des") ?? "")
+    const [errorMessage, setErrorMessage] = useState("")
+
+
+
+    useEffect(()=>{
+        localStorage.setItem("task", task)
+    },[task])
+
+    useEffect(()=>{
+        localStorage.setItem("des", description)
+    },[description])
 
 
     const submitForm = (ev: FormEvent) => {
@@ -20,6 +31,8 @@ export default function InputForm(props: InputFormProps) {
                 setDescription("")
                 props.onTaskCreation()
             })
+            .catch(()=> setErrorMessage("The task could not be crated"))
+
     }
 
     return (
@@ -36,6 +49,7 @@ export default function InputForm(props: InputFormProps) {
                 <span className={"inputformbutton"}>
                     <input type="submit" value={"Confirm"}/>
                 </span>
+                {errorMessage && <span className={"error"}>{errorMessage}</span>}
             </form>
         </div>
     )
