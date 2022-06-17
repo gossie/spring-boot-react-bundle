@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 class KanbanServiceTest {
@@ -19,7 +18,7 @@ class KanbanServiceTest {
         KanbanService kanbanService = new KanbanService(kanbanProjectRepo);
         kanbanService.addItem(item);
 
-        Mockito.verify(kanbanProjectRepo).addItem(item);
+        Mockito.verify(kanbanProjectRepo).save(item);
     }
 
     @Test
@@ -28,7 +27,7 @@ class KanbanServiceTest {
         Item item2 = new Item("Projekt2", "Beschreibung Projekt 2", StatusEnum.OPEN);
 
         KanbanProjectRepo kanbanProjectRepo = Mockito.mock(KanbanProjectRepo.class);
-        Mockito.when(kanbanProjectRepo.getAllItems())
+        Mockito.when(kanbanProjectRepo.findAll())
                 .thenReturn(List.of(item1, item2));
 
         KanbanService kanbanService = new KanbanService(kanbanProjectRepo);
@@ -73,7 +72,7 @@ class KanbanServiceTest {
 
         KanbanProjectRepo kanbanProjectRepo = Mockito.mock(KanbanProjectRepo.class);
 
-        Mockito.when(kanbanProjectRepo.getItemById("1234")).thenReturn(Optional.of(item));
+        Mockito.when(kanbanProjectRepo.findById("1234")).thenReturn(Optional.of(item));
 
         KanbanService kanbanService = new KanbanService(kanbanProjectRepo);
         Assertions.assertThat(kanbanService.getItemById("1234")).isEqualTo(item);
@@ -99,13 +98,13 @@ class KanbanServiceTest {
         Item item = new Item("Projekt1", "Beschreibung Projekt 1", StatusEnum.OPEN);
 
         KanbanProjectRepo kanbanProjectRepo = Mockito.mock(KanbanProjectRepo.class);
-        Mockito.when(kanbanProjectRepo.deleteItem("1234")).thenReturn(Optional.of(item));
+        Mockito.when(kanbanProjectRepo.deleteById("1234")).thenReturn(Optional.of(item));
 
         KanbanService kanbanService = new KanbanService(kanbanProjectRepo);
 
         Item returnedItem = kanbanService.deleteItem("1234");
 
-        Mockito.verify(kanbanProjectRepo).deleteItem("1234");
+        Mockito.verify(kanbanProjectRepo).deleteById("1234");
         Assertions.assertThat(returnedItem).isEqualTo(item);
     }
 

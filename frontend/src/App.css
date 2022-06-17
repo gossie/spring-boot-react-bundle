@@ -7,3 +7,10 @@ h1 {
     text-align: center;
     margin-bottom: 3rem;
 }
+
+.error-message {
+    margin: 0;
+    background-color: red;
+    text-align: center;
+    font-size: 2rem;
+}

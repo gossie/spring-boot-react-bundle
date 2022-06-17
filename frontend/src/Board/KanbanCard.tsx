@@ -6,11 +6,8 @@ import {Link, NavLink} from "react-router-dom";
 import "./KanbanCard.css"
 
 interface KanbanCardProps {
-    editMode: Boolean;
     item: TaskItem
-    onTaskChange: () => void;
-    setEditMode: () => void;
-    closeEditMode: () => void;
+    onTaskChange: Function;
 }
 
 export default function KanbanCard(props: KanbanCardProps) {
@@ -34,18 +31,18 @@ export default function KanbanCard(props: KanbanCardProps) {
 
 
     return (
-        <div>
+        <div className={"card"} data-testid={props.item.id}>
             <span>Task: </span>{props.item.task}
             <br/>
             <span>Description: </span>{props.item.description}
             <div>
                 {props.item.status === Status.OPEN?
-                    <button onClick={deleteTask}>delete</button>
-                :   <button onClick={prevState}>prev</button>}
+                    <button onClick={deleteTask}><i className="fa-solid fa-trash-can"></i></button>
+                :   <button onClick={prevState}><i className="fa-solid fa-arrow-left-long fa-lg"></i></button>}
 
-                <NavLink to={`/${props.item.id}`}><button>edit</button></NavLink>
-                {props.item.status !== Status.DONE && <button onClick={nextState}>next</button>}
-                {props.item.status === Status.DONE && <button onClick={deleteTask}>delete</button>}
+                <NavLink to={`/${props.item.id}`}><button><i className="fa-solid fa-pen-to-square"></i></button></NavLink>
+                {props.item.status !== Status.DONE && <button onClick={nextState}><i className="fa-solid fa-arrow-right-long fa-lg"></i></button>}
+                {props.item.status === Status.DONE && <button onClick={deleteTask}><i className="fa-solid fa-trash-can"></i></button>}
             </div>
         </div>
     )

@@ -64,8 +64,12 @@ public class KanbanController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void addItem(@RequestBody Item item) {
-        kanbanService.addItem(item);
+    public ResponseEntity<Object> addItem(@RequestBody Item item) {
+        try {
+            return ResponseEntity.ok(kanbanService.addItem(item));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")

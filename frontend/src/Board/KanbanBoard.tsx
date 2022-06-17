@@ -1,61 +1,37 @@
-import {useEffect, useState} from "react";
+import {SetStateAction, useEffect, useState} from "react";
 import {Status, TaskItem} from "../model";
 import KanbanCard from "./KanbanCard";
 import InputField from "../Input/InputField";
 import "./KanbanBoard.css"
+import axios from "axios";
 
+interface AppProps {
+    taskArray: Array<TaskItem>;
+    onTaskChange: Function;
+}
 
-export default function KanbanBoard() {
+export default function KanbanBoard(props: AppProps) {
 
-
-    const [taskArray, setTaskArray] = useState<Array<TaskItem>>([]);
-
-    const [editMode, setEditMode] = useState(false);
-
-    const setToEditMode = () => {
-        setEditMode(true);
-    }
-
-    const closeEditMode = () => {
-        setEditMode(false);
-    }
-
-
-    useEffect(() => fetchTasks(), [])
-
-    const fetchTasks = (url: string = "http://localhost:8080/api/kanban") => {
-        fetch(url, {method: "GET"})
-            .then(response => response.json())
-            .then(data => {
-                setTaskArray(data);
-            })
-    }
+    const taskArray = props.taskArray;
 
     const componentsOpen = taskArray.filter(task => task.status === Status.OPEN)
         .map(task => <KanbanCard key={task.id} item={task}
-                                 onTaskChange={fetchTasks}
-                                 setEditMode={setToEditMode}
-                                 editMode={editMode}
-                                 closeEditMode={closeEditMode}/>);
+                                 onTaskChange={props.onTaskChange}
+                                 />);
 
     const componentsInProgress = taskArray.filter(task => task.status === Status.IN_PROGRESS)
         .map(task => <KanbanCard key={task.id} item={task}
-                                 onTaskChange={fetchTasks}
-                                 setEditMode={setToEditMode}
-                                 editMode={editMode}
-                                 closeEditMode={closeEditMode}/>);
+                                 onTaskChange={props.onTaskChange}
+                                 />);
 
     const componentsDone = taskArray.filter(task => task.status === Status.DONE)
         .map(task => <KanbanCard key={task.id} item={task}
-                                 onTaskChange={fetchTasks}
-                                 setEditMode={setToEditMode}
-                                 editMode={editMode}
-                                 closeEditMode={closeEditMode}/>);
+                                 onTaskChange={props.onTaskChange}
+                                 />);
 
     return (
         <div>
             <div>
-                <InputField onTaskChange={fetchTasks}/>
                 <div className={"column-wrapper"}>
                     <div className="board-elm">
                         <h2>OPEN</h2>
@@ -70,7 +46,6 @@ export default function KanbanBoard() {
                         {componentsDone}
                     </div>
                 </div>
-
             </div>
         </div>
     )

@@ -1,7 +1,21 @@
 button {
     background-color: #3A5BA0;
     color: white;
-    width: 4.7rem;
+    width: 5.4rem;
+    height: 1.4rem;
     border-radius: 8px;
     margin: 0.7rem;
+}
+
+button:hover {
+    opacity: 60%;
+}
+
+.card {
+    background-color: #DBDFFD;
+    width: 400px;
+    border: 0px solid #3A5BA0;
+    border-radius: 5px;
+    margin: auto auto 1.5rem;
+    box-shadow: 5px 5px 10px  grey;
 }

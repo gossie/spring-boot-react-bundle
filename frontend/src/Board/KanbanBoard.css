@@ -10,5 +10,6 @@ h2 {
 }
 
 .board-elm {
+    width: 500px;
     text-align: center;
 }
