@@ -3,7 +3,7 @@ import {Todo} from "../model";
 import "./EditItem.css"
 
 interface EditItemProps {
-    fetchAll: () => void;
+    fetchAll: () => Promise<any>;
     editMode: string;
     setEditMode: (input: string) => void;
     editId: string;
@@ -44,11 +44,8 @@ export default function EditItem (props: EditItemProps) {
             body: JSON.stringify({task: task, description: description, status: "OPEN"}),
         })
             .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                props.fetchAll();
-                props.setEditMode("view");
-            })
+            .then(() => props.fetchAll())
+            .then( ()=>props.setEditMode("view") )
             .catch((error) => {
                 console.error('Error:', error);
             });
@@ -65,11 +62,8 @@ export default function EditItem (props: EditItemProps) {
             body: JSON.stringify({task: task, description: description, status: status, id: props.editId}),
         })
             .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                props.fetchAll();
-                props.setEditMode("view");// TODO bessere Möglichkeit
-            })
+            .then(() => props.fetchAll())
+            .then( ()=>props.setEditMode("view"))
             .catch((error) => {
                 console.error('Error:', error);
             });

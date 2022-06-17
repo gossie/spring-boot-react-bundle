@@ -19,7 +19,7 @@ export default function KanbanBoard () {
 
     const getAllTodos = () => {
         console.log(`fetch all todos from: ${startUrl}`);
-        fetch(startUrl)
+        return fetch(startUrl)
             .then(response => response.json())
             .then((tds: Todo[]) => {
                 setTodos(tds);
