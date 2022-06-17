@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 import {Todo} from "./model";
 
 axios.defaults.baseURL = "http://localhost:8080/api/kanban"
@@ -35,6 +35,6 @@ export function deleteTask(id: string) {
 
 export function getAllTasks(){
     return axios.get("")
-        .then(response => response.data);
+        .then((response: AxiosResponse<Todo[]>) => response.data);
 
 }

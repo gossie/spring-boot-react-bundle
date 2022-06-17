@@ -40,7 +40,9 @@ public class TodoService {
     }
 
     public Todo saveTodoChanges(Todo todo) {
-        if(todoRepository.findById(todo.getId()).isPresent()){
+        var fromDb = todoRepository.findById(todo.getId());
+        if(fromDb.isPresent()){
+            todo.setStatus(fromDb.get().getStatus());
             return todoRepository.save(todo);
         }
         return null;

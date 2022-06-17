@@ -1,27 +1,28 @@
 import {Todo} from "../model";
 import "./GalleryItem.css";
 import {deleteTask, moveTaskToNext, moveTaskToPrev} from "../apiService";
+import {useNavigate} from "react-router-dom";
 
 interface GalleryItemProps {
     todo: Todo;
     fetchAll: ()=>void;
-    editItem: (id: string)=>void;
 }
 
 export default function GalleryItem (props: GalleryItemProps) {
 
+    const nav = useNavigate();
 
     function nextStatus() {
         console.log(`to next status: ${props.todo}`)
         moveTaskToNext(props.todo)
-            .then(()=>props.fetchAll())
+            .then(props.fetchAll)
             .catch((error) => console.error('Error:', error));
     }
 
     function prevStatus() {
         console.log(`to prev status: ${props.todo}`)
         moveTaskToPrev(props.todo)
-            .then(()=>props.fetchAll())
+            .then(props.fetchAll)
             .catch((error) => console.error('Error:', error));
     }
 
@@ -29,7 +30,7 @@ export default function GalleryItem (props: GalleryItemProps) {
         console.log(`delete: ${props.todo}`)
 
         deleteTask(props.todo.id!)
-            .then(()=>props.fetchAll())
+            .then(props.fetchAll)
             .catch((error) => console.error('Error:', error));
     }
 
@@ -44,7 +45,7 @@ export default function GalleryItem (props: GalleryItemProps) {
                 <button onClick={() => prevStatus()}>prev</button>
             }
             {
-                <button onClick={() => props.editItem(props.todo.id!)}>edit</button>
+                <button onClick={() => nav(`/edit/${props.todo.id}`)}>edit</button>
             }
             {
                 (props?.todo?.status === "OPEN" || props?.todo?.status==="IN_PROGRESS") &&

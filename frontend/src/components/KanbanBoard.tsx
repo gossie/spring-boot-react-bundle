@@ -1,17 +1,15 @@
 import "./KanbanBoard.css"
 import {useEffect, useState} from "react";
-import EditItem from "./EditItem";
 import GalleryCategory from "./GalleryCategory";
 import {Todo} from "../model";
 import {getAllTasks} from "../apiService";
+import {useNavigate} from "react-router-dom";
 
 export default function KanbanBoard () {
 
     const [todos, setTodos] = useState<Todo[]>([]);
-    const [editMode, setEditMode] = useState<string>("view");
-    const [editId, setEditId] = useState<string>("")
 
-    const startUrl: string = "http://localhost:8080/api/kanban";
+    const nav = useNavigate();
 
     useEffect(() => {
         getAllTodos();
@@ -19,17 +17,15 @@ export default function KanbanBoard () {
 
 
     const getAllTodos = () => {
-        console.log(`fetch all todos from: ${startUrl}`);
+        console.log(`fetch all todos`);
         return getAllTasks()
-            .then((tds: Todo[]) => {
+            .then(tds => {
                 setTodos(tds);
-                console.log(tds);
             });
     }
 
-    function editItem(id: string) {
-        setEditId(id);
-        setEditMode("edit");
+    function goToNewTaskPage(){
+        nav("/new");
     }
 
     return (
@@ -37,30 +33,18 @@ export default function KanbanBoard () {
             <h1>
                 Super Duper Beste Todo App
             </h1>
-            {
-                editMode === "view" &&
-                <button onClick={() => setEditMode("new")}>Create new todo</button>
-            }
-            {
-                editMode === "edit" &&
-                <EditItem editId={editId} editMode="edit" fetchAll={getAllTodos} setEditMode={setEditMode}/>
-            }
-            {
-                editMode === "new" &&
-                <EditItem editId="" editMode="new" fetchAll={getAllTodos} setEditMode={setEditMode}/>
-            }
-
+            <button onClick={() => goToNewTaskPage()}>Create new todo</button>
             <div className="gallery">
                 {
-                    <GalleryCategory name={"Open"} editItem={editItem} todos={todos
+                    <GalleryCategory name={"Open"} todos={todos
                         .filter((t) => t.status === "OPEN")} fetchAll={getAllTodos}/>
                 }
                 {
-                    <GalleryCategory name={"In Progress"} editItem={editItem} todos={todos
+                    <GalleryCategory name={"In Progress"} todos={todos
                         .filter((t) => t.status === "IN_PROGRESS")} fetchAll={getAllTodos}/>
                 }
                 {
-                    <GalleryCategory name={"Done"} editItem={editItem} todos={todos
+                    <GalleryCategory name={"Done"} todos={todos
                         .filter((t) => t.status === "DONE")} fetchAll={getAllTodos}/>
                 }
             </div>
