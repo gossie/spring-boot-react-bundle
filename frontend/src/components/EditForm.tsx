@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 interface EditFormProps {
@@ -13,6 +13,14 @@ export default function EditForm(props: EditFormProps){
 
     const [task, setTask] = useState(props.taskIn);
     const [description, setDescription] = useState(props.descriptionIn);
+
+    useEffect(()=>{
+        localStorage.setItem('newItemTaskField', task);
+    },[task])
+
+    useEffect(()=>{
+        localStorage.setItem('newItemDescField', description);
+    },[description])
 
     const nav = useNavigate();
 
@@ -35,8 +43,14 @@ return (
                    setDescription(ev.target.value)
                }}/>
         <br/>
-        <button onClick={() => cancel()}>cancel</button>
-        <button onClick={() => props.setTaskAndDescription(task, description)} data-testid={"editformsubmit"}>{props.buttonText}</button>
+        <button onClick={() => {
+            localStorage.clear();
+            cancel();
+        }}>cancel</button>
+        <button onClick={() => {
+            localStorage.clear();
+            props.setTaskAndDescription(task, description);
+        }} data-testid={"editformsubmit"}>{props.buttonText}</button>
     </div>
 )
 }

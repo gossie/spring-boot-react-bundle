@@ -30,7 +30,7 @@ export default function NewItem () {
     return (
         <div>
             <h1>Create new task</h1>
-            <EditForm taskIn={""} descriptionIn={""} setTaskAndDescription={addNewTodo} buttonText={"send"}/>
+            <EditForm taskIn={localStorage.getItem("newItemTaskField")??""} descriptionIn={localStorage.getItem("newItemDescField")??""} setTaskAndDescription={addNewTodo} buttonText={"send"}/>
             <div className="errormsg">
                 {errorMsg}
             </div>
