@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {Button, Input} from "@mui/material";
 
 interface EditFormProps {
     taskIn: string;
@@ -32,25 +33,25 @@ return (
     <div>
 
         <label htmlFor="task">{"           "}Task: </label>
-        <input id="task" type="text" value={task} data-testid={"taskinput"}
+        <Input id="task" type="text" value={task} data-testid={"taskinput"}
                onChange={ev => {
                    setTask(ev.target.value)
                }}/>
         <br/>
         <label htmlFor="desc">Description: </label>
-        <input id="desc" type="text" value={description} data-testid={"descinput"}
+        <Input id="desc" type="text" value={description} data-testid={"descinput"}
                onChange={ev => {
                    setDescription(ev.target.value)
                }}/>
         <br/>
-        <button onClick={() => {
+        <Button onClick={() => {
             localStorage.clear();
             cancel();
-        }}>cancel</button>
-        <button onClick={() => {
+        }}>cancel</Button>
+        <Button onClick={() => {
             localStorage.clear();
             props.setTaskAndDescription(task, description);
-        }} data-testid={"editformsubmit"}>{props.buttonText}</button>
+        }} data-testid={"editformsubmit"}>{props.buttonText}</Button>
     </div>
 )
 }

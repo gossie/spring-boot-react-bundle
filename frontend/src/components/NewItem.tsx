@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react";
-import "./EditItem.css"
 import {createNewTask} from "../apiService";
 import EditForm from "./EditForm";
 import {useNavigate} from "react-router-dom";

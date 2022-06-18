@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import {Todo} from "../model";
-import "./EditItem.css"
 import {editTask, getTaskById} from "../apiService";
 import {useNavigate, useParams} from "react-router-dom";
 import EditForm from "./EditForm";

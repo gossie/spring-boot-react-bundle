@@ -1,5 +1,4 @@
 import {Todo} from "../model";
-import "./GalleryItem.css";
 import {deleteTask, moveTaskToNext, moveTaskToPrev} from "../apiService";
 import {useNavigate} from "react-router-dom";
 

@@ -1,9 +1,9 @@
-import "./KanbanBoard.css"
 import {useEffect, useState} from "react";
 import GalleryCategory from "./GalleryCategory";
 import {Todo} from "../model";
 import {getAllTasks} from "../apiService";
 import {useNavigate} from "react-router-dom";
+import {Box, Button, Grid} from "@mui/material";
 
 export default function KanbanBoard () {
 
@@ -33,21 +33,23 @@ export default function KanbanBoard () {
             <h1>
                 Super Duper Beste Todo App
             </h1>
-            <button onClick={() => goToNewTaskPage()}>Create new todo</button>
-            <div className="gallery">
-                {
-                    <GalleryCategory name={"Open"} todos={todos
-                        .filter((t) => t.status === "OPEN")} fetchAll={getAllTodos}/>
-                }
-                {
-                    <GalleryCategory name={"In Progress"} todos={todos
-                        .filter((t) => t.status === "IN_PROGRESS")} fetchAll={getAllTodos}/>
-                }
-                {
-                    <GalleryCategory name={"Done"} todos={todos
-                        .filter((t) => t.status === "DONE")} fetchAll={getAllTodos}/>
-                }
-            </div>
+            <Button onClick={() => goToNewTaskPage()}>Create new todo</Button>
+            <Box sx={{flexGrow: 1}}>
+                <Grid container spacing={2}>
+                    {
+                        <GalleryCategory name={"Open"} todos={todos
+                            .filter((t) => t.status === "OPEN")} fetchAll={getAllTodos}/>
+                    }
+                    {
+                        <GalleryCategory name={"In Progress"} todos={todos
+                            .filter((t) => t.status === "IN_PROGRESS")} fetchAll={getAllTodos}/>
+                    }
+                    {
+                        <GalleryCategory name={"Done"} todos={todos
+                            .filter((t) => t.status === "DONE")} fetchAll={getAllTodos}/>
+                    }
+                </Grid>
+            </Box>
         </div>
     )
 }

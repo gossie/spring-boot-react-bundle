@@ -2,12 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import CssBaseline from '@mui/material/CssBaseline';
+
+import {createTheme, ThemeProvider} from "@mui/material";
+
+
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
 
 ReactDOM.render(
     <React.StrictMode>
-        <App />
+        <ThemeProvider theme={darkTheme}>
+            <CssBaseline/>
+            <App />
+        </ThemeProvider>
     </React.StrictMode>,
-  document.getElementById('root')
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
