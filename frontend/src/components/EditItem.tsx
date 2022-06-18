@@ -16,7 +16,7 @@ export default function EditItem () {
     const params = useParams();
 
     useEffect(() => {
-        loadEditTaskFromBackend()
+        loadEditTaskFromBackend();
     }, [])
 
     useEffect(() => {
@@ -24,21 +24,28 @@ export default function EditItem () {
     }, [errorMsg]);
 
     const loadEditTaskFromBackend = () => {
+        console.log("loadEditTaskFromBackend")
         getTaskById(params.id!)
-            .then((todo: Todo) =>{
+            .then((todo: Todo) => {
                 setTask(todo.task);
                 setDesc(todo.description);
             })
+            .catch(() => {
+                nav("/");
+            })
+
     }
 
     function editTodo(task: string, desc: string) {
-        console.log(`edit: ${task} ${desc}`)
+        console.log(`editTodo: ${task} ${desc}`)
 
         // status is ignored from backend for edit, so I just put in any
         editTask({task: task, description: desc, status: "OPEN", id: params.id})
-            .then(()=>nav("/"))
+            .then(()=>{
+                nav("/");
+            })
             .catch((error) => {
-                if (error.response.status===422) {
+                if (error.response.status===400) {
                     setErrorMsg("Make sure your input is correct (task cannot be empty).");
                 } else if (error.response.status===404){
                     setErrorMsg("Something went wrong: Task to edit could not be found");
@@ -49,13 +56,15 @@ export default function EditItem () {
     }
 
     return (
-        <div>
+        <div data-testid={"edititem"}>
             <h1>Edit task</h1>
+            <div>
             {
-                task &&
+                task && desc &&
                 <EditForm taskIn={task} descriptionIn={desc} setTaskAndDescription={editTodo} buttonText={"edit"}/>
             }
-            <div className="errormsg">
+            </div>
+            <div className="errormsg" data-testid={"erroredititem"}>
                 {errorMsg}
             </div>
         </div>

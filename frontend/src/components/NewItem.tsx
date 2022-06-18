@@ -19,7 +19,7 @@ export default function NewItem () {
         createNewTask({task: task, description: desc, status: "OPEN"})
             .then(() => nav("/"))
             .catch((error) => {
-                if(error.response.status===422){
+                if(error.response.status===400){
                     setErrorMsg("Make sure your input is correct (task cannot be empty).");
                 }else{
                     setErrorMsg(error.toString);

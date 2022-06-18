@@ -24,19 +24,19 @@ return (
     <div>
 
         <label htmlFor="task">{"           "}Task: </label>
-        <input id="task" type="text" value={task}
+        <input id="task" type="text" value={task} data-testid={"taskinput"}
                onChange={ev => {
                    setTask(ev.target.value)
                }}/>
         <br/>
         <label htmlFor="desc">Description: </label>
-        <input id="desc" type="text" value={description}
+        <input id="desc" type="text" value={description} data-testid={"descinput"}
                onChange={ev => {
                    setDescription(ev.target.value)
                }}/>
         <br/>
         <button onClick={() => cancel()}>cancel</button>
-        <button onClick={() => props.setTaskAndDescription(task, description)}>{props.buttonText}</button>
+        <button onClick={() => props.setTaskAndDescription(task, description)} data-testid={"editformsubmit"}>{props.buttonText}</button>
     </div>
 )
 }

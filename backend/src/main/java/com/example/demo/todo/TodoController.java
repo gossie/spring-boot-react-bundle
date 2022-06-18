@@ -34,7 +34,7 @@ public class TodoController {
     @PutMapping
     public ResponseEntity<Todo> saveTodoChanges(@RequestBody Todo todo){
         if(todo.getTask()==null || todo.getTask().equals("")){
-            return ResponseEntity.unprocessableEntity().body(todo);
+            return ResponseEntity.badRequest().body(todo);
         }
         return ResponseEntity.of(Optional.ofNullable(todoService.saveTodoChanges(todo)));
     }
@@ -42,7 +42,7 @@ public class TodoController {
     @PostMapping
     public ResponseEntity<Todo> addTodo(@RequestBody Todo todo){
         if(todo.getTask()==null || todo.getTask().equals("")){
-            return ResponseEntity.unprocessableEntity().body(todo);
+            return ResponseEntity.badRequest().body(todo);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(todoService.addTodo(todo));
     }
