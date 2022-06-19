@@ -5,3 +5,10 @@
     grid-template-columns: 33% 33% 33%;
     text-align: center;
 }
+
+.open{
+    border-right: black 2px solid;
+}
+.done{
+    border-left: black 2px solid;
+}
