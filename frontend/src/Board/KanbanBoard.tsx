@@ -36,15 +36,15 @@ export default function KanbanBoard(props: AppProps) {
 
         <div className={"column-wrapper"}>
             <div className="board-elm">
-                <h2>{t("open")}</h2>
+                <h1>{t("open")}</h1>
                 {componentsOpen}
             </div>
             <div className="board-elm">
-                <h2>{t("in-progress")}</h2>
+                <h1>{t("in-progress")}</h1>
                 {componentsInProgress}
             </div>
             <div className="board-elm">
-                <h2>{t("done")}</h2>
+                <h1>{t("done")}</h1>
                 {componentsDone}
             </div>
         </div>
