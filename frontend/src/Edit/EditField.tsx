@@ -5,6 +5,7 @@ import {Link, NavLink, useNavigate, useParams} from "react-router-dom";
 import path from "path";
 import KanbanCard from "../Board/KanbanCard";
 import "./EditField.css"
+import {useTranslation} from "react-i18next";
 
 interface AppProps {
     onTaskChange: Function;
@@ -13,6 +14,7 @@ interface AppProps {
 
 export default function EditField(props: AppProps) {
     let navigate = useNavigate();
+    const {t} = useTranslation()
 
     const {id} = useParams();
     const [item, setItem] = useState({} as TaskItem);
@@ -27,8 +29,8 @@ export default function EditField(props: AppProps) {
                 setTask(data.task);
                 setDescription(data.description);
             }).catch(() => {
-                props.errorFunction("Could not find task id");
-                navigate("/");
+            props.errorFunction("Could not find task id");
+            navigate("/");
         })
     }, [])
 
@@ -40,21 +42,33 @@ export default function EditField(props: AppProps) {
             status: item.status
         })
             .then(() => {
+
                 props.onTaskChange();
+                navigate("/");
             })
     }
 
     return (
-        <div className="edit-field">
-            <div>
-                <label htmlFor="task">Task: </label>
-                <input name="task" value={task} onChange={ev => {setTask(ev.target.value)}}/>
+        <div className={"editField-wrapper"}>
+            <div className="edit-field">
+                <form onSubmit={saveChanges}>
+                    <div className={"edit-wrapper"}>
+                        <div className={"editField-label-box"}>
+                            <label className={"edit-label"} htmlFor="task">{t("inputField-task")}: </label>
+                            <label className={"edit-label"} htmlFor="description">{t("inputField-description")}: </label>
+                        </div>
+                        <div className={"editField-input-box"}>
+                            <input className={"edit-input"} data-testid={"taskEdit"} name="task"
+                                   value={task} onChange={ev => setTask(ev.target.value)}/>
+                            <input className={"edit-input"} data-testid={"descEdit"} name="description"
+                                   value={description} onChange={ev => setDescription(ev.target.value)}/>
+                        </div>
+                    </div>
+                    <div className={"edit-button-div"}>
+                        <button data-testid={"edit-submit"} type={"submit"}>Edit</button>
+                    </div>
+                </form>
             </div>
-            <div>
-                <label htmlFor="description">Description: </label>
-                <input name="description" value={description} onChange={ev => {setDescription(ev.target.value)}}/>
-            </div>
-            <Link to={"/"}><button onClick={saveChanges}>Edit</button></Link>
         </div>
     )
 }

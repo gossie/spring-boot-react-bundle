@@ -1,20 +1,60 @@
-.edit-field {
-    text-align: center;
-    margin-bottom: 4rem;
-}
-
-label {
-    font-size: 1.2rem;
+.edit-label {
+    font-size: 1.4rem;
     font-weight: bold;
+    padding-bottom: 1rem;
 }
 
-input {
-    width: 10rem;
-    font-size: 1rem;
+.editField-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.edit-field {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4rem;
+    border: 2px solid;
     border-radius: 8px;
+    width: 700px;
+    padding: 1rem 0;
+    box-shadow: 0 0 10px grey;
 }
 
 .edit-field button {
     width: 10rem;
     font-size: 1rem;
+}
+
+.editField-label-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 4rem;
+    font-size: 1.4rem;
+}
+
+.editField-input-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.edit-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.edit-input {
+    font-size: 1.4rem;
+    width: 25rem;
+    margin-bottom: 1rem;
+}
+
+.edit-button-div {
+    text-align: center;
+}
+.edit-field button {
+    font-size: 1.4rem;
+    height: 2rem;
 }

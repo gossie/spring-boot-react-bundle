@@ -1,20 +1,60 @@
-label {
-    font-size: 1.2rem;
+.label {
+    font-size: 1.4rem;
     font-weight: bold;
+    padding-bottom: 1rem;
 }
 
-input {
-    width: 10rem;
-    font-size: 1rem;
-    border-radius: 8px;
+.inputField-wrapper {
+    display: flex;
+    justify-content: center;
 }
 
 .input-field {
-    text-align: center;
+    display: flex;
+    justify-content: center;
     margin-bottom: 4rem;
+    border: 2px solid;
+    border-radius: 8px;
+    width: 700px;
+    padding: 1rem 0;
+    box-shadow: 0 0 10px grey;
 }
 
 .input-field button {
     width: 10rem;
     font-size: 1rem;
+}
+
+.inputField-label-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 4rem;
+    font-size: 1.4rem;
+}
+
+.inputField-input-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.input {
+    font-size: 1.4rem;
+    width: 25rem;
+    margin-bottom: 1rem;
+}
+
+.button-div {
+    text-align: center;
+}
+.input-field button {
+    font-size: 1.4rem;
+    height: 2rem;
 }

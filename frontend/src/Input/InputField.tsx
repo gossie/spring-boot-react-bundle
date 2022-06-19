@@ -37,18 +37,25 @@ export default function InputField(props: AppProps) {
     }
 
     return (
-        <div className="input-field">
-            <form onSubmit={sendTask}>
-                <div>
-                    <label htmlFor="task">{t("inputField-task")}: </label>
-                    <input data-testid={"taskInput"} name="task" required={true} value={inputTask} onChange={ev => setTask(ev.target.value)}/>
-                </div>
-                <div>
-                    <label htmlFor="description">{t("inputField-description")}: </label>
-                    <input data-testid={"descInput"} required={true} name="description" value={inputDescription} onChange={ev => setDescription(ev.target.value)}/>
-                </div>
-                <button data-testid={"submit"} type={"submit"}>{t("inputField-button")}</button>
-            </form>
+        <div className={"inputField-wrapper"}>
+            <div className="input-field">
+                <form onSubmit={sendTask}>
+                    <div className={"input-wrapper"}>
+                        <div className={"inputField-label-box"}>
+                            <label className={"label"} htmlFor="task">{t("inputField-task")}: </label>
+                            <label className={"label"} htmlFor="description">{t("inputField-description")}: </label>
+                        </div>
+                        <div className={"inputField-input-box"}>
+                            <input className={"input"} data-testid={"taskInput"} name="task" required={true} value={inputTask} onChange={ev => setTask(ev.target.value)}/>
+                            <input className={"input"} data-testid={"descInput"} required={true} name="description" value={inputDescription} onChange={ev => setDescription(ev.target.value)}/>
+                        </div>
+                    </div>
+                    <div className={"button-div"}>
+                        <button data-testid={"submit"} type={"submit"}>{t("inputField-button")}</button>
+                    </div>
+                </form>
+            </div>
         </div>
+
     )
 }
