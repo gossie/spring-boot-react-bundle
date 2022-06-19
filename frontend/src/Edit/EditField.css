@@ -12,6 +12,7 @@
 .edit-field {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     margin-bottom: 4rem;
     border: 2px solid;
     border-radius: 8px;
@@ -29,7 +30,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-right: 4rem;
+    margin-right: 0.6rem;
+    margin-left: 0.3rem;
     font-size: 1.4rem;
 }
 

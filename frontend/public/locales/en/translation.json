@@ -6,5 +6,6 @@
   "done": "Done",
   "inputField-task": "Task",
   "inputField-description": "Description",
-  "inputField-button": "Add Task"
+  "inputField-button": "Add Task",
+  "edit-button": "Apply"
 }

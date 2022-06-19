@@ -42,33 +42,34 @@ export default function EditField(props: AppProps) {
             status: item.status
         })
             .then(() => {
-
                 props.onTaskChange();
-                navigate("/");
             })
     }
 
     return (
         <div className={"editField-wrapper"}>
             <div className="edit-field">
-                <form onSubmit={saveChanges}>
+                <form onSubmit={() => {
+                    saveChanges();
+                    navigate("/");
+                }}>
                     <div className={"edit-wrapper"}>
                         <div className={"editField-label-box"}>
-                            <label className={"edit-label"} htmlFor="task">{t("inputField-task")}: </label>
+                            <label className={"edit-label"} htmlFor="task">{t("inputField-task")}:</label>
                             <label className={"edit-label"} htmlFor="description">{t("inputField-description")}: </label>
                         </div>
                         <div className={"editField-input-box"}>
-                            <input className={"edit-input"} data-testid={"taskEdit"} name="task"
-                                   value={task} onChange={ev => setTask(ev.target.value)}/>
-                            <input className={"edit-input"} data-testid={"descEdit"} name="description"
-                                   value={description} onChange={ev => setDescription(ev.target.value)}/>
+                            <input className={"edit-input"} name="task" value={task} onChange={ev => {setTask(ev.target.value)}}/>
+                            <input className={"edit-input"} name="description" value={description} onChange={ev => {setDescription(ev.target.value)}}/>
                         </div>
                     </div>
                     <div className={"edit-button-div"}>
-                        <button data-testid={"edit-submit"} type={"submit"}>Edit</button>
+                        <button type={"submit"}>{t("edit-button")}</button>
                     </div>
                 </form>
+
             </div>
         </div>
+
     )
 }

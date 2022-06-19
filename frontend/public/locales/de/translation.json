@@ -6,5 +6,6 @@
   "done": "Abgeschlossen",
   "inputField-task": "Aufgabe",
   "inputField-description": "Beschreibung",
-  "inputField-button": "Hinzufügen"
+  "inputField-button": "Hinzufügen",
+  "edit-button": "Übernehmen"
 }
