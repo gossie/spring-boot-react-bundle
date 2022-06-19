@@ -9,6 +9,11 @@ button {
 
 button:hover {
     opacity: 60%;
+    cursor: pointer;
+}
+
+span {
+    padding-bottom: 0.6rem;
 }
 
 .card {
@@ -18,4 +23,28 @@ button:hover {
     border-radius: 5px;
     margin: auto auto 1.5rem;
     box-shadow: 5px 5px 10px  grey;
+    padding: 1rem 0;
+    font-size: 1.2rem;
+}
+.text-box {
+    display: flex;
+    flex-direction: row;
+    padding: 0.3rem 0;
+
+}
+
+.titles-box {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-weight: bold;
+    margin-left: 3rem;
+}
+
+.content-box {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 30%;
+    margin-left: 1rem;
 }

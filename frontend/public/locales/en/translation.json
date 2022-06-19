@@ -1,0 +1,10 @@
+{
+  "task": "Task",
+  "description": "Description",
+  "open": "Open",
+  "in-progress": "In Progress",
+  "done": "Done",
+  "inputField-task": "Task",
+  "inputField-description": "Description",
+  "inputField-button": "Add Task"
+}

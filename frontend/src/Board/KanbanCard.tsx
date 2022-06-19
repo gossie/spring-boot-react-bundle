@@ -4,6 +4,7 @@ import {useState} from "react";
 import EditField from "../Edit/EditField";
 import {Link, NavLink} from "react-router-dom";
 import "./KanbanCard.css"
+import {useTranslation} from "react-i18next";
 
 interface KanbanCardProps {
     item: TaskItem
@@ -13,6 +14,7 @@ interface KanbanCardProps {
 export default function KanbanCard(props: KanbanCardProps) {
     const axios = require("axios").default;
 
+    const {t} = useTranslation();
 
     const nextState = () => {
         axios.put("http://localhost:8080/api/kanban/next", props.item)
@@ -32,9 +34,17 @@ export default function KanbanCard(props: KanbanCardProps) {
 
     return (
         <div className={"card"} data-testid={props.item.id}>
-            <span>Task: </span>{props.item.task}
-            <br/>
-            <span>Description: </span>{props.item.description}
+            <div className={"text-box"}>
+                <div className={"titles-box"}>
+                    <span>{t("task")}: </span>
+                    <span>{t("description")}: </span>
+                </div>
+                <div className={"content-box"}>
+                    <span>{props.item.task}</span>
+                    <span>{props.item.description}</span>
+                </div>
+            </div>
+
             <div>
                 {props.item.status === Status.OPEN?
                     <button onClick={deleteTask}><i className="fa-solid fa-trash-can"></i></button>

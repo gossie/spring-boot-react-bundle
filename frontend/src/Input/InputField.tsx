@@ -2,6 +2,7 @@ import {FormEvent, useEffect, useState} from "react";
 import {Status, TaskItem} from "../model";
 import "./InputField.css"
 import axios, {AxiosError} from "axios";
+import {useTranslation} from "react-i18next";
 
 interface AppProps {
     onTaskChange: () => void;
@@ -12,6 +13,7 @@ export default function InputField(props: AppProps) {
 
     const [inputTask, setTask] = useState(localStorage.getItem("task") ?? "");
     const [inputDescription, setDescription] = useState(localStorage.getItem("description") ?? "");
+    const {t} = useTranslation();
 
     useEffect(() => {
         localStorage.setItem("task", inputTask)
@@ -38,14 +40,14 @@ export default function InputField(props: AppProps) {
         <div className="input-field">
             <form onSubmit={sendTask}>
                 <div>
-                    <label htmlFor="task">Task: </label>
+                    <label htmlFor="task">{t("inputField-task")}: </label>
                     <input data-testid={"taskInput"} name="task" required={true} value={inputTask} onChange={ev => setTask(ev.target.value)}/>
                 </div>
                 <div>
-                    <label htmlFor="description">Description: </label>
+                    <label htmlFor="description">{t("inputField-description")}: </label>
                     <input data-testid={"descInput"} required={true} name="description" value={inputDescription} onChange={ev => setDescription(ev.target.value)}/>
                 </div>
-                <button data-testid={"submit"} type={"submit"}>Add Task</button>
+                <button data-testid={"submit"} type={"submit"}>{t("inputField-button")}</button>
             </form>
         </div>
     )

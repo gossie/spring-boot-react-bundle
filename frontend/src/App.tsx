@@ -24,7 +24,7 @@ function App() {
 
     useEffect(() => {
         setTimeout(() => setError(""), 3000)
-    }, [])
+    }, [errorMessage])
 
     return (
 

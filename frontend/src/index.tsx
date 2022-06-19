@@ -1,13 +1,16 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import "./i18n";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import EditField from "./Edit/EditField";
 
 ReactDOM.render(
     <React.StrictMode>
-        <App/>
+        <Suspense fallback={"Loading..."}>
+            <App/>
+        </Suspense>
     </React.StrictMode>,
   document.getElementById('root')
 );
