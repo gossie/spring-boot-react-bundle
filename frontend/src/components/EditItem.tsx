@@ -6,8 +6,7 @@ import EditForm from "./EditForm";
 
 export default function EditItem () {
 
-    const [task, setTask] = useState("");
-    const [desc, setDesc] = useState("");
+    const [task, setTask] = useState<Todo>();
 
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -27,8 +26,7 @@ export default function EditItem () {
         getTaskById(params.id!)
             .then((todo: Todo) => {
                 console.log(todo);
-                setTask(todo.task);
-                setDesc(todo.description);
+                setTask(todo);
             })
             .catch(() => {
                 nav("/");
@@ -61,7 +59,7 @@ export default function EditItem () {
             <div>
             {
                 task &&
-                <EditForm taskIn={task} descriptionIn={desc} setTaskAndDescription={editTodo} buttonText={"edit"}/>
+                <EditForm taskIn={task.task} descriptionIn={task.description} setTaskAndDescription={editTodo} buttonText={"edit"}/>
             }
             </div>
             <div className="errormsg" data-testid={"erroredititem"}>
