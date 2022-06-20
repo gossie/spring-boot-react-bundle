@@ -9,7 +9,7 @@ export interface InputField {
 }
 
 export interface TaskItem {
-    id: string;
+    id?: string;
     task: string;
     description: string;
     status: Status;

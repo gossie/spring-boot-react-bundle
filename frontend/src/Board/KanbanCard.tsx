@@ -5,6 +5,7 @@ import EditField from "../Edit/EditField";
 import {Link, NavLink} from "react-router-dom";
 import "./KanbanCard.css"
 import {useTranslation} from "react-i18next";
+import {deleteTaskFromBackend, moveTaskToNextState, moveTaskToPrevState} from "../API_services/services";
 
 interface KanbanCardProps {
     item: TaskItem
@@ -12,22 +13,21 @@ interface KanbanCardProps {
 }
 
 export default function KanbanCard(props: KanbanCardProps) {
-    const axios = require("axios").default;
 
     const {t} = useTranslation();
 
     const nextState = () => {
-        axios.put("http://localhost:8080/api/kanban/next", props.item)
+        moveTaskToNextState(props.item)
             .then(() => props.onTaskChange());
     }
 
     const prevState = async () => {
-        axios.put("http://localhost:8080/api/kanban/prev", props.item)
+         moveTaskToPrevState(props.item)
             .then(() => props.onTaskChange());
     }
 
     const deleteTask = () => {
-        axios.delete(`http://localhost:8080/api/kanban/${props.item.id}`)
+        deleteTaskFromBackend(props.item.id!)
             .then(() => props.onTaskChange());
     }
 

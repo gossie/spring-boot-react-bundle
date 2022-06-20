@@ -3,6 +3,7 @@ import {Status, TaskItem} from "../model";
 import "./InputField.css"
 import axios, {AxiosError} from "axios";
 import {useTranslation} from "react-i18next";
+import {addTask} from "../API_services/services";
 
 interface AppProps {
     onTaskChange: () => void;
@@ -22,11 +23,13 @@ export default function InputField(props: AppProps) {
 
     const sendTask = (ev: FormEvent) => {
         ev.preventDefault();
-        axios.post("http://localhost:8080/api/kanban", {
+        const item: TaskItem = {
             task: inputTask,
             description: inputDescription,
             status: Status.OPEN
-        }).then(() => {
+        }
+         addTask(item)
+            .then(() => {
             setTask("");
             setDescription("")
             props.onTaskChange();
