@@ -33,7 +33,7 @@ export default function KanbanBoard () {
             <Typography color={"textSecondary"} variant={"h3"} align={"center"} gutterBottom>
                 Super Duper Beste Todo App
             </Typography>
-            <Button onClick={() => goToNewTaskPage()}>Create new todo</Button>
+            <Button  sx={{ ml: 2 }} variant="outlined" onClick={() => goToNewTaskPage()}>Create new todo</Button>
             <Box sx={{flexGrow: 1}}>
                 <Grid container spacing={2}>
                     {

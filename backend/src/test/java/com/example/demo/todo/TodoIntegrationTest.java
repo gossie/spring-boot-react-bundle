@@ -43,12 +43,12 @@ public class TodoIntegrationTest {
         // add bad todo
         Todo todoForBadRequest = new Todo(null, null, null);
         todoResponse = restTemplate.postForEntity("/api/kanban", todoForBadRequest, Todo.class);
-        assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+        assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(todoResponse.getBody()).isEqualTo(todoForBadRequest);
 
         todoForBadRequest = new Todo("", "", null);
         todoResponse = restTemplate.postForEntity("/api/kanban", todoForBadRequest, Todo.class);
-        assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+        assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(todoResponse.getBody()).isEqualTo(todoForBadRequest);
 
 
