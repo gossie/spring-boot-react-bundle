@@ -3,7 +3,7 @@ import GalleryCategory from "./GalleryCategory";
 import {Todo} from "../model";
 import {getAllTasks} from "../apiService";
 import {useNavigate} from "react-router-dom";
-import {Box, Button, Grid} from "@mui/material";
+import {Box, Button, Grid, Typography} from "@mui/material";
 
 export default function KanbanBoard () {
 
@@ -30,9 +30,9 @@ export default function KanbanBoard () {
 
     return (
         <div className="board">
-            <h1>
+            <Typography color={"textSecondary"} variant={"h3"} align={"center"} gutterBottom>
                 Super Duper Beste Todo App
-            </h1>
+            </Typography>
             <Button onClick={() => goToNewTaskPage()}>Create new todo</Button>
             <Box sx={{flexGrow: 1}}>
                 <Grid container spacing={2}>

@@ -1,6 +1,6 @@
 import {Todo} from "../model";
 import GalleryItem from "./GalleryItem";
-import {Grid, Paper, styled} from "@mui/material";
+import {Grid, Paper, styled, Typography} from "@mui/material";
 
 interface GalleryCategoryProps {
     name: string;
@@ -11,10 +11,8 @@ interface GalleryCategoryProps {
 export default function GalleryCategory(props: GalleryCategoryProps) {
     return (
         <Grid item xs={4}>
-            <Item>
-                <h2>
-                    {props.name}
-                </h2>
+            <Item  sx={{ m: 2 }}>
+                <Typography color={"textSecondary"} variant={"h4"} align={"center"}>{props.name}</Typography>
                 {
                     props.todos
                         .map((t) => <GalleryItem key={t.id} todo={t} fetchAll={props.fetchAll}/>)

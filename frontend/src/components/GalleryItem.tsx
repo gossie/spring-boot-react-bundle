@@ -1,13 +1,14 @@
 import {Todo} from "../model";
 import {deleteTask, moveTaskToNext, moveTaskToPrev} from "../apiService";
 import {useNavigate} from "react-router-dom";
+import {Button, Card, CardContent, Typography} from "@mui/material";
 
 interface GalleryItemProps {
     todo: Todo;
-    fetchAll: ()=>void;
+    fetchAll: () => void;
 }
 
-export default function GalleryItem (props: GalleryItemProps) {
+export default function GalleryItem(props: GalleryItemProps) {
 
     const nav = useNavigate();
 
@@ -34,26 +35,31 @@ export default function GalleryItem (props: GalleryItemProps) {
     }
 
     return (
-        <div className="item">
-                <h2>{props.todo.task}</h2>
-                <p>
+        <Card sx={{m: 1}}>
+            <CardContent>
+                <Typography color="textPrimary" variant="h5">
+                    {props.todo.task}
+                </Typography>
+                <Typography color="textPrimary" variant="subtitle2">
                     Description: {props.todo.description}
-                </p>
-            {
-                (props?.todo?.status === "DONE" || props?.todo?.status==="IN_PROGRESS") &&
-                <button onClick={() => prevStatus()}>prev</button>
-            }
-            {
-                <button onClick={() => nav(`/edit/${props.todo.id}`)}>edit</button>
-            }
-            {
-                (props?.todo?.status === "OPEN" || props?.todo?.status==="IN_PROGRESS") &&
-                <button onClick={() => nextStatus()}>next</button>
-            }
-            {
-                props?.todo?.status === "DONE" &&
-                <button onClick={() => deleteTodo()}>delete</button>
-            }
-        </div>
+                </Typography>
+
+                {
+                    (props?.todo?.status === "DONE" || props?.todo?.status === "IN_PROGRESS") &&
+                    <Button variant="outlined" onClick={() => prevStatus()}>prev</Button>
+                }
+                {
+                    <Button variant="outlined" onClick={() => nav(`/edit/${props.todo.id}`)}>edit</Button>
+                }
+                {
+                    (props?.todo?.status === "OPEN" || props?.todo?.status === "IN_PROGRESS") &&
+                    <Button variant="outlined" onClick={() => nextStatus()}>next</Button>
+                }
+                {
+                    props?.todo?.status === "DONE" &&
+                    <Button variant="outlined" onClick={() => deleteTodo()}>delete</Button>
+                }
+            </CardContent>
+        </Card>
     )
 }

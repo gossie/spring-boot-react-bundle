@@ -26,6 +26,7 @@ export default function EditItem () {
         console.log("loadEditTaskFromBackend")
         getTaskById(params.id!)
             .then((todo: Todo) => {
+                console.log(todo);
                 setTask(todo.task);
                 setDesc(todo.description);
             })
@@ -59,7 +60,7 @@ export default function EditItem () {
             <h1>Edit task</h1>
             <div>
             {
-                task && desc &&
+                task &&
                 <EditForm taskIn={task} descriptionIn={desc} setTaskAndDescription={editTodo} buttonText={"edit"}/>
             }
             </div>
