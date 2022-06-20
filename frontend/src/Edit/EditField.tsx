@@ -6,6 +6,7 @@ import path from "path";
 import KanbanCard from "../Board/KanbanCard";
 import "./EditField.css"
 import {useTranslation} from "react-i18next";
+import {editTask, getTaskById} from "../API_services/services";
 
 interface AppProps {
     onTaskChange: Function;
@@ -22,7 +23,7 @@ export default function EditField(props: AppProps) {
     const [description, setDescription] = useState("");
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/kanban/${id}`)
+        getTaskById(id!)
             .then(response => response.data)
             .then(data => {
                 setItem(data);
@@ -35,12 +36,13 @@ export default function EditField(props: AppProps) {
     }, [])
 
     const saveChanges = () => {
-        axios.put("http://localhost:8080/api/kanban", {
+         const editedTask: TaskItem = {
             id: item.id,
             task: task,
             description: description,
             status: item.status
-        })
+        }
+        editTask(editedTask)
             .then(() => {
                 props.onTaskChange();
             })

@@ -6,6 +6,10 @@ export function getAllData() {
         .then(response => response.data)
 }
 
+export function getTaskById(id: string) {
+   return axios.get(`http://localhost:8080/api/kanban/${id}`)
+}
+
 export function moveTaskToNextState(item: TaskItem) {
    return axios.put("http://localhost:8080/api/kanban/next", item)
 }
@@ -20,4 +24,8 @@ export function deleteTaskFromBackend(id: string) {
 
 export function addTask(item: TaskItem) {
    return axios.post("http://localhost:8080/api/kanban", item)
+}
+
+export function editTask(item: TaskItem) {
+   return axios.put("http://localhost:8080/api/kanban", item)
 }
