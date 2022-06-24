@@ -27,5 +27,5 @@ export function editTask(task: Task){
 }
 
 export function getTask(taskId: string){
-    return axios.get(`http://localhost:8080/api/kanban/` + taskId)
+    return axios.get(`/api/kanban/` + taskId)
 }
