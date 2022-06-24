@@ -12,9 +12,9 @@ class TodoControllerUnitTest {
     @Test
     void getTodos() {
         TodoService mockedTodoService = Mockito.mock(TodoService.class);
-        var todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
-        var todo2 = new Todo("test todo 2", "todo 2", TodoStatus.IN_PROGRESS);
-        var todo3 = new Todo("test todo 3", "todo 3", TodoStatus.DONE);
+        var todo1 = new Todo("1", "test todo 1", "todo 1", TodoStatus.OPEN);
+        var todo2 = new Todo("2", "test todo 2", "todo 2", TodoStatus.IN_PROGRESS);
+        var todo3 = new Todo("3", "test todo 3", "todo 3", TodoStatus.DONE);
         var todos = List.of(todo1, todo2, todo3);
         when(mockedTodoService.getAllTodos()).thenReturn(todos);
         TodoController todoController = new TodoController(mockedTodoService);
@@ -28,7 +28,7 @@ class TodoControllerUnitTest {
     void addTodo() {
         TodoService mockedTodoService = Mockito.mock(TodoService.class);
         TodoController todoController = new TodoController(mockedTodoService);
-        Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
+        Todo todo1 = new Todo("1", "test todo 1", "todo 1", TodoStatus.OPEN);
         todoController.addTodo(todo1);
 
         Mockito.verify(mockedTodoService).addTodo(todo1);
@@ -38,7 +38,7 @@ class TodoControllerUnitTest {
     void deleteTodo() {
         TodoService mockedTodoService = Mockito.mock(TodoService.class);
         TodoController todoController = new TodoController(mockedTodoService);
-        Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
+        Todo todo1 = new Todo("1", "test todo 1", "todo 1", TodoStatus.OPEN);
 
         todoController.deleteTodo(todo1.getId());
 

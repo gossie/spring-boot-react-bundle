@@ -10,18 +10,22 @@ import java.util.Optional;
 @Service
 public class TodoService {
 
-    private final TodoRepository todoRepository;
+    private final TodoMongoRepository todoRepository;
 
     public List<Todo> getAllTodos() {
         return todoRepository.findAll();
     }
 
     public Todo addTodo(Todo todo) {
-        return Optional.ofNullable(todoRepository.save(todo)).orElse(todo);
+        return Optional.of(todoRepository.save(todo)).orElse(todo);
     }
 
-    public Optional<Todo> deleteTodo(String id) {
-        return todoRepository.delete(id);
+    public boolean deleteTodo(String id) {
+        if(todoRepository.existsById(id)) {
+            todoRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     public Optional<Todo> nextTodoStatus(Todo todo) {

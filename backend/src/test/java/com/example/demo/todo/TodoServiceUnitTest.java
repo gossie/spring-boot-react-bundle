@@ -14,10 +14,10 @@ class TodoServiceUnitTest {
     @Test
     void getAllTodos() {
 
-        TodoRepository mockedTodoRepository = Mockito.mock(TodoRepository.class);
-        var todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
-        var todo2 = new Todo("test todo 2", "todo 2", TodoStatus.IN_PROGRESS);
-        var todo3 = new Todo("test todo 3", "todo 3", TodoStatus.DONE);
+        TodoMongoRepository mockedTodoRepository = Mockito.mock(TodoMongoRepository.class);
+        var todo1 = new Todo("1", "test todo 1", "todo 1", TodoStatus.OPEN);
+        var todo2 = new Todo("2", "test todo 2", "todo 2", TodoStatus.IN_PROGRESS);
+        var todo3 = new Todo("3", "test todo 3", "todo 3", TodoStatus.DONE);
         var todos = List.of(todo1, todo2, todo3);
         when(mockedTodoRepository.findAll()).thenReturn(todos);
         TodoService todoService = new TodoService(mockedTodoRepository);
@@ -29,9 +29,9 @@ class TodoServiceUnitTest {
 
     @Test
     void addTodo() {
-        TodoRepository mockedTodoRepository = Mockito.mock(TodoRepository.class);
+        TodoMongoRepository mockedTodoRepository = Mockito.mock(TodoMongoRepository.class);
         TodoService todoService = new TodoService(mockedTodoRepository);
-        Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
+        Todo todo1 = new Todo("1", "test todo 1", "todo 1", TodoStatus.OPEN);
 
         todoService.addTodo(todo1);
 
@@ -39,21 +39,22 @@ class TodoServiceUnitTest {
     }
     @Test
     void deleteTodo() {// TODO delete has now return -> test this
-        TodoRepository mockedTodoRepository = Mockito.mock(TodoRepository.class);
+        TodoMongoRepository mockedTodoRepository = Mockito.mock(TodoMongoRepository.class);
         TodoService todoService = new TodoService(mockedTodoRepository);
-        Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
+        Todo todo1 = new Todo("1", "test todo 1", "todo 1", TodoStatus.OPEN);
+        when(mockedTodoRepository.existsById(todo1.getId())).thenReturn(true);
 
         todoService.deleteTodo(todo1.getId());
 
-        Mockito.verify(mockedTodoRepository).delete(todo1.getId());
+        Mockito.verify(mockedTodoRepository).deleteById(todo1.getId());
     }
 
     @Test
     void nextTodoStatus() {
 
-        TodoRepository mockedTodoRepository = Mockito.mock(TodoRepository.class);
+        TodoMongoRepository mockedTodoRepository = Mockito.mock(TodoMongoRepository.class);
         TodoService todoService = new TodoService(mockedTodoRepository);
-        Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
+        Todo todo1 = new Todo("1", "test todo 1", "todo 1", TodoStatus.OPEN);
         when(mockedTodoRepository.findById(todo1.getId())).thenReturn(Optional.of(todo1));
         when(mockedTodoRepository.save(todo1)).thenReturn(todo1);
 
@@ -77,9 +78,9 @@ class TodoServiceUnitTest {
     @Test
     void prevTodoStatus() {
 
-        TodoRepository mockedTodoRepository = Mockito.mock(TodoRepository.class);
+        TodoMongoRepository mockedTodoRepository = Mockito.mock(TodoMongoRepository.class);
         TodoService todoService = new TodoService(mockedTodoRepository);
-        Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
+        Todo todo1 = new Todo("1", "test todo 1", "todo 1", TodoStatus.OPEN);
         when(mockedTodoRepository.findById(todo1.getId())).thenReturn(Optional.of(todo1));
         when(mockedTodoRepository.save(todo1)).thenReturn(todo1);
 
@@ -91,9 +92,9 @@ class TodoServiceUnitTest {
 
     @Test
     void getTodoById() {
-        TodoRepository mockedTodoRepository = Mockito.mock(TodoRepository.class);
+        TodoMongoRepository mockedTodoRepository = Mockito.mock(TodoMongoRepository.class);
         TodoService todoService = new TodoService(mockedTodoRepository);
-        Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
+        Todo todo1 = new Todo("1", "test todo 1", "todo 1", TodoStatus.OPEN);
 
         when(mockedTodoRepository.findById(todo1.getId())).thenReturn(Optional.ofNullable(todo1));
 
@@ -104,9 +105,9 @@ class TodoServiceUnitTest {
 
     @Test // not really useful because todo1 is the same object the whole time ;)
     void saveTodoChanges() {
-        TodoRepository mockedTodoRepository = Mockito.mock(TodoRepository.class);
+        TodoMongoRepository mockedTodoRepository = Mockito.mock(TodoMongoRepository.class);
         TodoService todoService = new TodoService(mockedTodoRepository);
-        Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
+        Todo todo1 = new Todo("1", "test todo 1", "todo 1", TodoStatus.OPEN);
 
         when(mockedTodoRepository.findById(todo1.getId())).thenReturn(Optional.ofNullable(todo1));
         when(mockedTodoRepository.save(todo1)).thenReturn(todo1);
