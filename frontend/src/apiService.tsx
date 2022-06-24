@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from "axios";
 import {Todo} from "./model";
 
-axios.defaults.baseURL = "http://localhost:8080/api/kanban"
+axios.defaults.baseURL = "/api/kanban"
 
 export function moveTaskToNext(todo: Todo){
     return axios.put("/next", todo)
