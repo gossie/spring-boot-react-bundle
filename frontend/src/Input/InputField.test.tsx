@@ -13,7 +13,7 @@ test("that form is submitted with correct inputs", async () => {
     const changeDummyFunction = jest.fn();
 
     jest.spyOn(axios, "post").mockImplementation((url: string, data: any) => {
-        expect(url).toEqual("http://localhost:8080/api/kanban");
+        expect(url).toEqual("/api/kanban");
         expect(data).toEqual({task: "Hello", description: "World", status: Status.OPEN})
         return Promise.resolve({} as AxiosResponse)
     })
@@ -43,7 +43,7 @@ test("that form is submitted with correct inputs", async () => {
     const changeDummyFunction = jest.fn();
 
     jest.spyOn(axios, "post").mockImplementation((url: string, data: any) => {
-        expect(url).toEqual("http://localhost:8080/api/kanban");
+        expect(url).toEqual("/api/kanban");
         expect(data).toEqual({task: "Hello", description: "World", status: Status.OPEN})
         return Promise.reject({response: {data: "blub"}} as AxiosError)
     })

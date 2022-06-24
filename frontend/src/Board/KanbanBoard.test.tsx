@@ -24,7 +24,7 @@ test("that server connection established and items rendered properly", async () 
     }
 
     jest.spyOn(axios, "get").mockImplementation((url: string) => {
-        expect(url).toEqual("http://localhost:8080/api/kanban")
+        expect(url).toEqual("/api/kanban")
         return Promise.resolve({
             status: 200,
             data: [task1, task2]
