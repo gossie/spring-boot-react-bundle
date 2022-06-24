@@ -17,7 +17,7 @@ public class TodoService {
     }
 
     public Todo addTodo(Todo todo) {
-        return Optional.of(todoRepository.save(todo)).orElse(todo);
+        return todoRepository.save(todo);
     }
 
     public boolean deleteTodo(String id) {

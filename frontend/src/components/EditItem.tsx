@@ -15,7 +15,7 @@ export default function EditItem () {
 
     useEffect(() => {
         loadEditTaskFromBackend();
-    }, [])
+    }, [])// eslint-disable-line no-use-before-define
 
     useEffect(() => {
         setTimeout(()=>setErrorMsg(""), 5000)
