@@ -1,7 +1,7 @@
 
 import {render, waitFor} from "@testing-library/react";
 import axios from "axios";
-import EditItem from "./EditItem";
+import EditItem from "../components/EditItem";
 
 const mockUseNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({

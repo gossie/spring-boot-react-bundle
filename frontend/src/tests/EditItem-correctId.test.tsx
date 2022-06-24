@@ -2,7 +2,7 @@
 import {fireEvent, render, screen, waitFor} from "@testing-library/react";
 import axios from "axios";
 import {Todo} from "../model";
-import EditItem from "./EditItem";
+import EditItem from "../components/EditItem";
 
 const mockUseNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
@@ -38,7 +38,8 @@ test('Edit item mocked', async ()=>{
         expect(screen.getByTestId("edititem")).toHaveTextContent("Description")
     })
 
-    fireEvent.change(screen.getByTestId('taskinput'), { target: { value: '' }});
+    const edit_task_input = screen.getByTestId('taskinput').children[0];
+    fireEvent.change(edit_task_input, { target: { value: '' }});
     fireEvent.click(screen.getByTestId('editformsubmit'))
 
     await waitFor(()=> {
@@ -46,7 +47,7 @@ test('Edit item mocked', async ()=>{
     })
 
 
-    fireEvent.change(screen.getByTestId('taskinput'), { target: { value: 'task1edited' }});
+    fireEvent.change(screen.getByTestId('taskinput').children[0], { target: { value: 'task1edited' }});
     fireEvent.click(screen.getByTestId('editformsubmit'))
 
     await waitFor(()=> {
