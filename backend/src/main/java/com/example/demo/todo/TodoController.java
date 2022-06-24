@@ -33,6 +33,9 @@ public class TodoController {
      */
     @PutMapping
     public ResponseEntity<Todo> saveTodoChanges(@RequestBody Todo todo){
+        if(todo.getTask()==null || todo.getTask().equals("")){
+            return ResponseEntity.badRequest().body(todo);
+        }
         return ResponseEntity.of(Optional.ofNullable(todoService.saveTodoChanges(todo)));
     }
 
