@@ -4,13 +4,14 @@ package com.example.demo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
 
-    private final TaskRepo taskRepo;
+    private final RepoDB taskRepo;
 
-    public TaskService(TaskRepo taskRepo) {
+    public TaskService(RepoDB taskRepo) {
         this.taskRepo = taskRepo;
     }
 
@@ -19,16 +20,16 @@ public class TaskService {
     }
 
     public List<Task> listAllTasks(){
-        return taskRepo.list();
+        return taskRepo.findAll();
     }
 
 
     public void deleteOneTaskById(String id) {
-        taskRepo.delte(id);
+        taskRepo.deleteById(id);
     }
 
-    public Task getOneTask(String id) {
-        return taskRepo.get(id);
+    public Optional<Task> getOneTask(String id) {
+        return taskRepo.findById(id);
     }
 
     public void editOneTask(Task task) {

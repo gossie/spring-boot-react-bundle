@@ -2,10 +2,12 @@ package com.example.demo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
 
 @Data
+@Document(collection = "tasks")
 public class Task {
 
     private  String id;

@@ -6,8 +6,8 @@ import org.mockito.Mockito;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
 
 public class TaskServiceTest {
@@ -16,7 +16,7 @@ public class TaskServiceTest {
     void shouldAddOneTask(){
         //given
         Task t1 = new Task("Aufräumen", "Zimmer aufräumen");
-        TaskRepo taskRepo = mock(TaskRepo.class);
+        RepoDB taskRepo = mock(RepoDB.class);
         TaskService taskService = new TaskService(taskRepo);
         //when
         taskService.addOneTaskToDo(t1);
@@ -29,8 +29,8 @@ public class TaskServiceTest {
         //given
         Task t1 = new Task("Aufräumen", "Zimmer aufräumen");
         Task t2 = new Task("Abwaschen", "Dreckiges Geschirr abwaschen");
-        TaskRepo taskRepo = mock(TaskRepo.class);
-        when(taskRepo.list()).thenReturn(List.of(t1, t2));
+        RepoDB taskRepo = mock(RepoDB.class);
+        when(taskRepo.findAll()).thenReturn(List.of(t1, t2));
         TaskService taskService = new TaskService(taskRepo);
         //when
         Collection<Task> actual = taskService.listAllTasks();
@@ -44,12 +44,12 @@ public class TaskServiceTest {
     void shouldDeleteOneTask(){
         //given
         Task t1 = new Task("Aufräumen", "Zimmer aufräumen");
-        TaskRepo taskRepo = mock(TaskRepo.class);
+        RepoDB taskRepo = mock(RepoDB.class);
         TaskService taskService = new TaskService(taskRepo);
         //when
         taskService.deleteOneTaskById(t1.getId());
         //then
-        Mockito.verify(taskRepo).delte(t1.getId());
+        Mockito.verify(taskRepo).deleteById(t1.getId());
     }
 
     @Test
@@ -57,11 +57,11 @@ public class TaskServiceTest {
         //given
         Task t1 = new Task("Aufräumen", "Zimmer aufräumen");
         Task t2 = new Task("Abwaschen", "Dreckiges Geschirr abwaschen");
-        TaskRepo taskRepo = mock(TaskRepo.class);
-        when(taskRepo.get("1337")).thenReturn(t1);
+        RepoDB taskRepo = mock(RepoDB.class);
+        when(taskRepo.findById("1337")).thenReturn(Optional.of(t1));
         TaskService taskService = new TaskService(taskRepo);
         //when
-        Task actual = taskService.getOneTask("1337");
+        Task actual = taskService.getOneTask("1337").orElseThrow();
         //then
         Assertions.assertThat(actual).isEqualTo(t1);
     }
@@ -71,11 +71,11 @@ public class TaskServiceTest {
         //given
         Task t1 = new Task("Aufräumen", "Zimmer aufräumen");
         Task t2 = new Task("Abwaschen", "Dreckiges Geschirr abwaschen");
-        TaskRepo taskRepo = mock(TaskRepo.class);
-        when(taskRepo.get("1337")).thenReturn(t1);
+        RepoDB taskRepo = mock(RepoDB.class);
+        when(taskRepo.findById("1337")).thenReturn(Optional.of(t1));
         TaskService taskService = new TaskService(taskRepo);
         //when
-        Task actual = taskService.getOneTask("1336");
+        Optional<Task> actual = taskService.getOneTask("1336");
         //then
         Assertions.assertThat(actual).isNotIn(t1);
     }
@@ -85,7 +85,7 @@ public class TaskServiceTest {
         //Given
         Task t1 = new Task("Aufräumen", "Zimmer aufräumen");
         Task t2 = new Task("Aufräumen", "Zimmer aufräumen");
-        TaskRepo taskRepo = mock(TaskRepo.class);
+        RepoDB taskRepo = mock(RepoDB.class);
         TaskService taskService = new TaskService(taskRepo);
         taskService.addOneTaskToDo(t1);
         //when
@@ -102,7 +102,7 @@ public class TaskServiceTest {
     void shouldGetNextStatus(){
         //given
         Task t1 = new Task("Aufräumen", "Zimmer aufräumen");
-        TaskRepo taskRepo = mock(TaskRepo.class);
+        RepoDB taskRepo = mock(RepoDB.class);
         TaskService taskService = new TaskService(taskRepo);
         //when
         taskService.nextStatusOfTask(t1);
@@ -115,7 +115,7 @@ public class TaskServiceTest {
     void shouldGetPrevStatus(){
         //given
         Task t1 = new Task("Aufräumen", "Zimmer aufräumen");
-        TaskRepo taskRepo = mock(TaskRepo.class);
+        RepoDB taskRepo = mock(RepoDB.class);
         TaskService taskService = new TaskService(taskRepo);
         //when
         taskService.nextStatusOfTask(t1);

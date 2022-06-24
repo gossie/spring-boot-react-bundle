@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -30,7 +31,7 @@ public class TaskController {
         taskService.deleteOneTaskById(id);
     }
     @GetMapping("/kanban/{id}")
-    public Task getTask(@PathVariable String id){
+    public Optional<Task> getTask(@PathVariable String id){
         return taskService.getOneTask(id);
     }
 
