@@ -1,4 +1,4 @@
-import {Component, SetStateAction, useEffect, useState} from "react";
+import {Component, FormEvent, SetStateAction, useEffect, useState} from "react";
 import {default as axios} from "axios";
 import {Status, TaskItem} from "../model";
 import {Link, NavLink, useNavigate, useParams} from "react-router-dom";
@@ -35,7 +35,8 @@ export default function EditField(props: AppProps) {
         })
     }, [])
 
-    const saveChanges = () => {
+    const saveChanges = (ev: FormEvent) => {
+        ev.preventDefault();
          const editedTask: TaskItem = {
             id: item.id,
             task: task,
@@ -45,16 +46,14 @@ export default function EditField(props: AppProps) {
         editTask(editedTask)
             .then(() => {
                 props.onTaskChange();
+                navigate("/");
             })
     }
 
     return (
         <div className={"editField-wrapper"}>
             <div className="edit-field">
-                <form onSubmit={() => {
-                    saveChanges();
-                    navigate("/");
-                }}>
+                <form onSubmit={saveChanges}>
                     <div className={"edit-wrapper"}>
                         <div className={"editField-label-box"}>
                             <label className={"edit-label"} htmlFor="task">{t("inputField-task")}:</label>

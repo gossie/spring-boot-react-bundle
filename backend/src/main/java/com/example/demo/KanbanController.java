@@ -37,7 +37,7 @@ public class KanbanController {
     public ResponseEntity<Item> editItem(@RequestBody Item item) {
         try {
             return ResponseEntity.ok(kanbanService.editItem(item));
-        } catch (NoSuchElementException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -47,7 +47,7 @@ public class KanbanController {
     public ResponseEntity<Item> moveToNext(@RequestBody Item item) {
         try {
             return ResponseEntity.ok(kanbanService.moveToNext(item));
-        } catch (NoSuchElementException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -56,8 +56,8 @@ public class KanbanController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Item> moveToPrev(@RequestBody Item item) {
         try {
-            return ResponseEntity.ok(kanbanService.moveToPrev(item));
-        } catch (NoSuchElementException e) {
+            return ResponseEntity.ok(kanbanService.addItem(item));
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
     }

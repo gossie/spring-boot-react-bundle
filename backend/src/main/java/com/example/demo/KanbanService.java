@@ -4,11 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class KanbanService {
-    private final KanbanProjectRepo kanbanProjectRepo;
+    private final KanbanProjectRepoInterface kanbanProjectRepo;
+
     public Collection<Item> getAllItems() {
         return kanbanProjectRepo.findAll();
     }
@@ -16,31 +18,36 @@ public class KanbanService {
         return kanbanProjectRepo.findById(id).orElseThrow();
     }
     public Item editItem(Item item) {
-        return kanbanProjectRepo.replaceItem(item).orElseThrow();
+        return kanbanProjectRepo.save(item);
     }
     public Item moveToNext(Item item){
         StatusEnum newStatus = item.getStatus().next();
         item.setStatus(newStatus);
-        return kanbanProjectRepo.replaceItem(item).orElseThrow();
+        return kanbanProjectRepo.save(item);
     }
     public Item moveToPrev(Item item){
         StatusEnum newStatus = item.getStatus().prev();
         item.setStatus(newStatus);
-        return kanbanProjectRepo.replaceItem(item).orElseThrow();
+        return kanbanProjectRepo.save(item);
     }
     public Item addItem(Item item) {
-        if(!kanbanProjectRepo.findByTaskAndDescription(item.getTask(), item.getDescription()).isEmpty()) {
-            throw new RuntimeException("Identical inputs detected");
-        }
-
         if("".equals(item.getTask()) || "".equals(item.getDescription())) {
             throw new RuntimeException("Empty inputs detected");
         }
+
+//        Optional<Item> itemFromDB = kanbanProjectRepo.findById(item.getId());
+//        if(itemFromDB.isPresent()) {
+//            if(itemFromDB.get().getTask().equals(item.getTask()) && itemFromDB.get().getDescription().equals(item.getDescription())){
+//                throw new RuntimeException("Identical inputs detected");
+//            }
+//        }
         return kanbanProjectRepo.save(item);
     }
 
     public Item deleteItem(String id) {
-        return kanbanProjectRepo.deleteById(id).orElseThrow();
+        Item itemToDelete = kanbanProjectRepo.findById(id).orElseThrow();
+        kanbanProjectRepo.delete(itemToDelete);
+        return itemToDelete;
     }
 
 }

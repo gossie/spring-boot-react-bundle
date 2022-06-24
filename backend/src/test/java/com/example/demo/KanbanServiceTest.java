@@ -13,8 +13,7 @@ class KanbanServiceTest {
     void shouldSucceedOnAddMethodCall() {
         Item item = new Item("Projekt1", "Beschreibung Projekt 1", StatusEnum.OPEN);
 
-        KanbanProjectRepo kanbanProjectRepo = Mockito.mock(KanbanProjectRepo.class);
-
+        KanbanProjectRepoInterface kanbanProjectRepo = Mockito.mock(KanbanProjectRepoInterface.class);
         KanbanService kanbanService = new KanbanService(kanbanProjectRepo);
         kanbanService.addItem(item);
 
@@ -26,7 +25,7 @@ class KanbanServiceTest {
         Item item1 = new Item("Projekt1", "Beschreibung Projekt 1", StatusEnum.OPEN);
         Item item2 = new Item("Projekt2", "Beschreibung Projekt 2", StatusEnum.OPEN);
 
-        KanbanProjectRepo kanbanProjectRepo = Mockito.mock(KanbanProjectRepo.class);
+        KanbanProjectRepoInterface kanbanProjectRepo = Mockito.mock(KanbanProjectRepoInterface.class);
         Mockito.when(kanbanProjectRepo.findAll())
                 .thenReturn(List.of(item1, item2));
 
@@ -40,14 +39,14 @@ class KanbanServiceTest {
     void shouldReturnCorrectItemStatusAfterMovedToNext() {
         Item item = new Item("Projekt1", "Beschreibung Projekt 1", StatusEnum.OPEN);
 
-        KanbanProjectRepo kanbanProjectRepo = Mockito.mock(KanbanProjectRepo.class);
-        Mockito.when(kanbanProjectRepo.replaceItem(item)).thenReturn(Optional.of(item));
+        KanbanProjectRepoInterface kanbanProjectRepo = Mockito.mock(KanbanProjectRepoInterface.class);
+        Mockito.when(kanbanProjectRepo.save(item)).thenReturn(item);
 
         KanbanService kanbanService = new KanbanService(kanbanProjectRepo);
 
         kanbanService.moveToNext(item);
 
-        Mockito.verify(kanbanProjectRepo).replaceItem(item);
+        Mockito.verify(kanbanProjectRepo).save(item);
         Assertions.assertThat(item.getStatus()).isEqualTo(StatusEnum.IN_PROGRESS);
     }
 
@@ -55,14 +54,14 @@ class KanbanServiceTest {
     void shouldReturnCorrectItemStatusAfterMovedToPrev() {
         Item item = new Item("Projekt1", "Beschreibung Projekt 1", StatusEnum.IN_PROGRESS);
 
-        KanbanProjectRepo kanbanProjectRepo = Mockito.mock(KanbanProjectRepo.class);
-        Mockito.when(kanbanProjectRepo.replaceItem(item)).thenReturn(Optional.of(item));
+        KanbanProjectRepoInterface kanbanProjectRepo = Mockito.mock(KanbanProjectRepoInterface.class);
+        Mockito.when(kanbanProjectRepo.save(item)).thenReturn(item);
 
         KanbanService kanbanService = new KanbanService(kanbanProjectRepo);
 
         kanbanService.moveToPrev(item);
 
-        Mockito.verify(kanbanProjectRepo).replaceItem(item);
+        Mockito.verify(kanbanProjectRepo).save(item);
         Assertions.assertThat(item.getStatus()).isEqualTo(StatusEnum.OPEN);
     }
 
@@ -70,7 +69,7 @@ class KanbanServiceTest {
     void shouldReturnItemById() {
         Item item = new Item("Projekt1", "Beschreibung Projekt 1", StatusEnum.OPEN);
 
-        KanbanProjectRepo kanbanProjectRepo = Mockito.mock(KanbanProjectRepo.class);
+        KanbanProjectRepoInterface kanbanProjectRepo = Mockito.mock(KanbanProjectRepoInterface.class);
 
         Mockito.when(kanbanProjectRepo.findById("1234")).thenReturn(Optional.of(item));
 
@@ -82,30 +81,15 @@ class KanbanServiceTest {
     void shouldEditItem() {
         Item item = new Item("Projekt1", "Beschreibung Projekt 1", StatusEnum.OPEN);
 
-        KanbanProjectRepo kanbanProjectRepo = Mockito.mock(KanbanProjectRepo.class);
-        Mockito.when(kanbanProjectRepo.replaceItem(item)).thenReturn(Optional.of(item));
+        KanbanProjectRepoInterface kanbanProjectRepo = Mockito.mock(KanbanProjectRepoInterface.class);
+        Mockito.when(kanbanProjectRepo.save(item)).thenReturn(item);
 
         KanbanService kanbanService = new KanbanService(kanbanProjectRepo);
 
         kanbanService.editItem(item);
 
-        Mockito.verify(kanbanProjectRepo).replaceItem(item);
+        Mockito.verify(kanbanProjectRepo).save(item);
 
-    }
-
-    @Test
-    void shouldDeleteItem() {
-        Item item = new Item("Projekt1", "Beschreibung Projekt 1", StatusEnum.OPEN);
-
-        KanbanProjectRepo kanbanProjectRepo = Mockito.mock(KanbanProjectRepo.class);
-        Mockito.when(kanbanProjectRepo.deleteById("1234")).thenReturn(Optional.of(item));
-
-        KanbanService kanbanService = new KanbanService(kanbanProjectRepo);
-
-        Item returnedItem = kanbanService.deleteItem("1234");
-
-        Mockito.verify(kanbanProjectRepo).deleteById("1234");
-        Assertions.assertThat(returnedItem).isEqualTo(item);
     }
 
 }
