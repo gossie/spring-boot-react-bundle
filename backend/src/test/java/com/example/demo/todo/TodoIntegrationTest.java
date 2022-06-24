@@ -30,9 +30,9 @@ public class TodoIntegrationTest {
         assertThat(todoArrayResponse.getBody()).isEmpty();
 
         // add 3 todos via api
-        Todo todo1 = new Todo("test todo 1", "todo 1", TodoStatus.OPEN);
-        Todo todo2 = new Todo("test todo 2", "todo 2", TodoStatus.IN_PROGRESS);
-        Todo todo3 = new Todo("test todo 3", "todo 3", TodoStatus.DONE);
+        Todo todo1 = new Todo("1", "test todo 1", "todo 1", TodoStatus.OPEN);
+        Todo todo2 = new Todo("2", "test todo 2", "todo 2", TodoStatus.IN_PROGRESS);
+        Todo todo3 = new Todo("3", "test todo 3", "todo 3", TodoStatus.DONE);
         var todos = new Todo[]{todo1, todo2, todo3};
         for(Todo t: todos){
             todoResponse = restTemplate.postForEntity("/api/kanban", t, Todo.class);
@@ -41,12 +41,12 @@ public class TodoIntegrationTest {
         }
 
         // add bad todo
-        Todo todoForBadRequest = new Todo(null, null, null);
+        Todo todoForBadRequest = new Todo(null, null, null, null);
         todoResponse = restTemplate.postForEntity("/api/kanban", todoForBadRequest, Todo.class);
         assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(todoResponse.getBody()).isEqualTo(todoForBadRequest);
 
-        todoForBadRequest = new Todo("", "", null);
+        todoForBadRequest = new Todo("1", "", "", null);
         todoResponse = restTemplate.postForEntity("/api/kanban", todoForBadRequest, Todo.class);
         assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(todoResponse.getBody()).isEqualTo(todoForBadRequest);
@@ -65,10 +65,9 @@ public class TodoIntegrationTest {
         assertThat(todoArrayResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(todoArrayResponse.getBody()).containsExactlyInAnyOrderElementsOf(List.of(todo1, todo2));
 
-        // delete todo2 with restTemplate.exchange for statusCode etc
+        // delete todo2 with restTemplate.exchange for statusCode AND return etc
         todoResponse = restTemplate.exchange("/api/kanban/{id}", HttpMethod.DELETE, new HttpEntity<>(todo2), Todo.class, todo2.getId());
         assertThat(todoResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(todoResponse.getBody()).isEqualTo(todo2);
 
         // check if deleted
         todoArrayResponse = restTemplate.getForEntity("/api/kanban", Todo[].class);

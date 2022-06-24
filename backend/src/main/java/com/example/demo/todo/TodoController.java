@@ -48,8 +48,11 @@ public class TodoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Todo> deleteTodo(@PathVariable String id){
-        return ResponseEntity.of(todoService.deleteTodo(id));
+    public ResponseEntity deleteTodo(@PathVariable String id){
+        if(todoService.deleteTodo(id)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/next")
