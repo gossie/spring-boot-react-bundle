@@ -13,9 +13,11 @@ export default function EditItem () {
     const nav = useNavigate();
     const params = useParams();
 
+    /*eslint-disable */
     useEffect(() => {
         loadEditTaskFromBackend();
-    }, [])// eslint-disable-line no-use-before-define
+    }, [])
+    /*eslint-enable */
 
     useEffect(() => {
         setTimeout(()=>setErrorMsg(""), 5000)
