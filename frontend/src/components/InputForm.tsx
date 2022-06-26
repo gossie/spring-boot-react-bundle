@@ -1,6 +1,7 @@
 import {FormEvent, useEffect, useState} from "react";
 import {createTask} from "../service/apiServices";
 import "./InputForm.css"
+import {Button, TextField} from "@mui/material";
 
 interface InputFormProps {
     onTaskCreation: () => void;
@@ -38,15 +39,15 @@ export default function InputForm(props: InputFormProps) {
         <div>
             <form onSubmit={submitForm}>
                 <span className={"input"}>
-                    <input className={"inputfield"} type="text" value={task} placeholder={"Task"}
+                    <TextField  label="Task" variant="outlined" className={"inputfield"} type="text" value={task}
                            onChange={event => setTask(event.target.value)}/>
                 </span>
                 <span className={"input"}>
-                    <input className={"inputfield"} type="text" value={description} placeholder={"Description"}
+                    <TextField label="Description" variant="outlined" value={description}
                        onChange={event => setDescription(event.target.value)}/>
                 </span>
                 <span className={"inputformbutton"}>
-                    <input type="submit" value={"Confirm"}/>
+                    <Button variant="contained" type="submit">Confirm</Button>
                 </span>
                 {errorMessage && <span className={"error"}>{errorMessage}</span>}
             </form>

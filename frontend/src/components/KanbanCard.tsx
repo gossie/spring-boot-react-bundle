@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import "./KanbanCard.css"
 import {useState} from "react";
 import "../pages/Error.css"
+import {Card, Paper} from "@mui/material";
 
 interface KanbanCardProps{
     task: Task;
@@ -38,7 +39,7 @@ export default function KanbanCard(props: KanbanCardProps){
 
 
     return(
-        <div className={"kanbanCard"}>
+        <Paper variant={"outlined"} className={"kanbanCard"}>
             {errorMessage1 && <p className={"error"}>{errorMessage1}</p>}
             {errorMessage2 && <p className={"error"}>{errorMessage2}</p>}
             {errorMessage3 && <p className={"error"}>{errorMessage3}</p>}
@@ -47,6 +48,6 @@ export default function KanbanCard(props: KanbanCardProps){
             {props.task.status === "OPEN" ? <button onClick={deleteCard}>Delete</button> : <button onClick={demoteCard}>Demote</button>}
             <button className={"editbutton"} onClick={()=> nav("/" + props.task.id)}>Edit</button>
             {props.task.status === "DONE" ? <button onClick={deleteCard}>Delete</button> : <button onClick={promoteCard}>Promote</button>}
-        </div>
+        </Paper>
     )
 }

@@ -1,21 +1,4 @@
-.inputform{
-    display: flex;
-    justify-content: center;
-    margin: 10px;
-}
 
-.input{
-    display: flex;
-    justify-content: center;
-    margin: 10px;
-}
-
-.inputfield{
-    text-align: center;
-    height: 30px;
-    border-top-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
 
 .inputformbutton{
     display: flex;
