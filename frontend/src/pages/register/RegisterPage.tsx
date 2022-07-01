@@ -2,6 +2,7 @@ import {Button, TextField} from "@mui/material";
 import {FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {registerUser} from "../../service/apiServices";
+import Header from "../../components/Header";
 
 
 export default function RegisterPage(){
@@ -19,7 +20,10 @@ export default function RegisterPage(){
 
     return(
         <div>
-            Register
+            <Header/>
+            <div>
+                <h2 className={"header"}>Register Page</h2>
+            </div>
             <div>
                 <form onSubmit={register}>
                     <span className={"input"}>
@@ -30,7 +34,7 @@ export default function RegisterPage(){
                         <TextField type={"password"} label="Password" variant="outlined" value={password}
                                    onChange={event => setPassword(event.target.value)}/>
                     </span>
-                        <span className={"inputformbutton"}>
+                        <span className={"input"}>
                         <Button variant="contained" type="submit">Confirm</Button>
                     </span>
                     <div className={"input"}>

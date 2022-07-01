@@ -1,5 +1,6 @@
 import {Button} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import Header from "../../components/Header";
 
 
 export default function WelcomePage(){
@@ -8,10 +9,14 @@ export default function WelcomePage(){
 
     return(
         <div>
-            Welcome!
+            <Header/>
             <div>
-                <Button onClick={()=>nav("/login")}>Login</Button>
-                <Button onClick={()=>nav("/register")}>Register</Button>
+                <div className={"input"}>
+                    <Button variant={"contained"} onClick={()=>nav("/login")}>Login</Button>
+                </div>
+                <div className={"input"}>
+                    <Button variant={"contained"} onClick={()=>nav("/register")}>Register</Button>
+                </div>
             </div>
         </div>
     )

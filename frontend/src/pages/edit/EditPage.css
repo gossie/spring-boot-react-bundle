@@ -1,26 +1,6 @@
 
 
-.headeredit{
-    display: flex;
-    justify-content: center;
-    color: white;
-    text-shadow: black 0.1em 0.1em 0.1em;
-}
-
 .input{
-    display: flex;
-    justify-content: center;
-    margin: 10px;
-}
-
-.inputedit{
-    text-align: center;
-    height: 30px;
-    border-top-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
-
-.button{
     display: flex;
     justify-content: center;
     margin: 10px;

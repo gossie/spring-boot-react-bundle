@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +16,7 @@ public class TaskServiceTest {
     @Test
     void shouldAddOneTask(){
         //given
-        Task t1 = new Task("Aufräumen", "Zimmer aufräumen");
+        Task t1 = new Task("Aufräumen", "Zimmer aufräumen", "hans");
         RepoDB taskRepo = mock(RepoDB.class);
         TaskService taskService = new TaskService(taskRepo);
         //when
@@ -27,13 +28,13 @@ public class TaskServiceTest {
     @Test
     void shouldListAllTasks(){
         //given
-        Task t1 = new Task("Aufräumen", "Zimmer aufräumen");
-        Task t2 = new Task("Abwaschen", "Dreckiges Geschirr abwaschen");
+        Task t1 = new Task("Aufräumen", "Zimmer aufräumen", "hans");
+        Task t2 = new Task("Abwaschen", "Dreckiges Geschirr abwaschen", "peter");
         RepoDB taskRepo = mock(RepoDB.class);
         when(taskRepo.findAll()).thenReturn(List.of(t1, t2));
         TaskService taskService = new TaskService(taskRepo);
         //when
-        Collection<Task> actual = taskService.listAllTasks();
+        Collection<Task> actual = taskService.listAllTasksById();
         //then
         Assertions.assertThat(actual)
                 .isEqualTo(List.of(t1, t2));
@@ -43,7 +44,7 @@ public class TaskServiceTest {
     @Test
     void shouldDeleteOneTask(){
         //given
-        Task t1 = new Task("Aufräumen", "Zimmer aufräumen");
+        Task t1 = new Task("Aufräumen", "Zimmer aufräumen", "hans");
         RepoDB taskRepo = mock(RepoDB.class);
         TaskService taskService = new TaskService(taskRepo);
         //when
@@ -55,8 +56,8 @@ public class TaskServiceTest {
     @Test
     void shouldGetOneTask(){
         //given
-        Task t1 = new Task("Aufräumen", "Zimmer aufräumen");
-        Task t2 = new Task("Abwaschen", "Dreckiges Geschirr abwaschen");
+        Task t1 = new Task("Aufräumen", "Zimmer aufräumen","hans");
+        Task t2 = new Task("Abwaschen", "Dreckiges Geschirr abwaschen", "peter");
         RepoDB taskRepo = mock(RepoDB.class);
         when(taskRepo.findById("1337")).thenReturn(Optional.of(t1));
         TaskService taskService = new TaskService(taskRepo);
@@ -69,8 +70,8 @@ public class TaskServiceTest {
     @Test
     void shouldGetNoTask(){
         //given
-        Task t1 = new Task("Aufräumen", "Zimmer aufräumen");
-        Task t2 = new Task("Abwaschen", "Dreckiges Geschirr abwaschen");
+        Task t1 = new Task("Aufräumen", "Zimmer aufräumen","hans");
+        Task t2 = new Task("Abwaschen", "Dreckiges Geschirr abwaschen", "peter");
         RepoDB taskRepo = mock(RepoDB.class);
         when(taskRepo.findById("1337")).thenReturn(Optional.of(t1));
         TaskService taskService = new TaskService(taskRepo);
@@ -83,8 +84,8 @@ public class TaskServiceTest {
     @Test
     void shouldEditTask(){
         //Given
-        Task t1 = new Task("Aufräumen", "Zimmer aufräumen");
-        Task t2 = new Task("Aufräumen", "Zimmer aufräumen");
+        Task t1 = new Task("Aufräumen", "Zimmer aufräumen","hans");
+        Task t2 = new Task("Aufräumen", "Zimmer aufräumen","hans");
         RepoDB taskRepo = mock(RepoDB.class);
         TaskService taskService = new TaskService(taskRepo);
         taskService.addOneTaskToDo(t1);
@@ -101,7 +102,7 @@ public class TaskServiceTest {
     @Test
     void shouldGetNextStatus(){
         //given
-        Task t1 = new Task("Aufräumen", "Zimmer aufräumen");
+        Task t1 = new Task("Aufräumen", "Zimmer aufräumen","hans");
         RepoDB taskRepo = mock(RepoDB.class);
         TaskService taskService = new TaskService(taskRepo);
         //when
@@ -114,7 +115,7 @@ public class TaskServiceTest {
     @Test
     void shouldGetPrevStatus(){
         //given
-        Task t1 = new Task("Aufräumen", "Zimmer aufräumen");
+        Task t1 = new Task("Aufräumen", "Zimmer aufräumen","hans");
         RepoDB taskRepo = mock(RepoDB.class);
         TaskService taskService = new TaskService(taskRepo);
         //when

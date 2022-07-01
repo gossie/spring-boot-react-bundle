@@ -14,14 +14,16 @@ import java.util.UUID;
 public class Task {
 
     @Id
-    private  String id;
-    private  String task;
-    private  String description;
-    private  EnumStatus status = EnumStatus.OPEN;
+    private String id;
+    private String task;
+    private String description;
+    private EnumStatus status = EnumStatus.OPEN;
+    private String userId;
 
-    public Task(String task, String discription) {
+    public Task(String task, String discription, String userId) {
         this.task = task;
         this.description = discription;
+        this.userId = userId;
         id = UUID.randomUUID().toString();
     }
 }

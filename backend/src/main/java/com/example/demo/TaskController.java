@@ -3,6 +3,7 @@ package com.example.demo;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,12 +20,12 @@ public class TaskController {
 
     @PostMapping("/kanban")
     @ResponseStatus(HttpStatus.CREATED)
-    public void postTask(@RequestBody Task task){
-        taskService.addOneTaskToDo(task);
+    public void postTask(@RequestBody Task task, Principal principal){
+        taskService.addOneTaskToDo(task, principal);
     }
     @GetMapping("/kanban")
-    public List<Task> getAllTasks(){
-        return taskService.listAllTasks();
+    public List<Task> getAllTasksById(Principal principal){
+        return taskService.listAllTasksById(principal);
     }
     @DeleteMapping("/kanban/{id}")
     public void deleteTask(@PathVariable String id){

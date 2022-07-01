@@ -2,6 +2,7 @@ import {FormEvent, useEffect, useState} from "react";
 import {createTask} from "../service/apiServices";
 import "./InputForm.css"
 import {Button, TextField} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 interface InputFormProps {
     onTaskCreation: () => void;
@@ -12,6 +13,7 @@ export default function InputForm(props: InputFormProps) {
     const [task, setTask] = useState(localStorage.getItem("task") ?? "")
     const [description, setDescription] = useState(localStorage.getItem("des") ?? "")
     const [errorMessage, setErrorMessage] = useState("")
+    const nav = useNavigate()
 
 
 
@@ -46,11 +48,14 @@ export default function InputForm(props: InputFormProps) {
                     <TextField label="Description" variant="outlined" value={description}
                        onChange={event => setDescription(event.target.value)}/>
                 </span>
-                <span className={"inputformbutton"}>
+                <span className={"input"}>
                     <Button variant="contained" type="submit">Confirm</Button>
                 </span>
                 {errorMessage && <span className={"error"}>{errorMessage}</span>}
             </form>
+            <span className={"input"}>
+                    <Button onClick={()=> nav("/")} variant="contained" type="button">Back</Button>
+                </span>
         </div>
     )
 }

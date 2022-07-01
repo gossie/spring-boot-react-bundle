@@ -3,6 +3,8 @@ import {Task} from "../../service/model";
 import {useNavigate, useParams} from "react-router-dom";
 import {editTask, getTask} from "../../service/apiServices";
 import "./EditPage.css"
+import Header from "../../components/Header";
+import {Button, TextField} from "@mui/material";
 
 
 export default function EditPage() {
@@ -44,13 +46,16 @@ export default function EditPage() {
 
     return (
         <div>
-            <h1 className={"headeredit"}>To-Do</h1>
-            <h2 className={"headeredit"}>Edit page</h2>
             <div>
-                <span className={"input"}><input className={"inputedit"} type="text" placeholder={"Task"} value={task} onChange={event => setTask(event.target.value)}/></span>
-                <span className={"input"}><input className={"inputedit"} type="text" placeholder={"Description"} value={description}
+                <h1 className={"header"}>Edit-Page</h1>
+            </div>
+            <div>
+                <span><TextField className={"inputedit"} type="text" placeholder={"Task"} value={task} onChange={event => setTask(event.target.value)}/></span>
+                <br/>
+                <span><TextField className={"inputedit"} type="text" placeholder={"Description"} value={description}
                              onChange={event => setDescription(event.target.value)}/></span>
-                <span className={"button"}><button onClick={saveChange}>Save</button></span>
+                <br/>
+                <span className={"button"}><Button variant={"contained"} onClick={saveChange}>Save</Button></span>
                 {errorMessage && <div className={"error"}>{errorMessage}</div>}
             </div>
         </div>
