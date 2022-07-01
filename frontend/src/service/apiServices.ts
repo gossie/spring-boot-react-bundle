@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { Task } from "./model";
+import {LoginResponse, Task} from "./model";
 
 export function fetchAllTasks() {
     return axios.get('/api/kanban')
@@ -28,4 +28,21 @@ export function editTask(task: Task){
 
 export function getTask(taskId: string){
     return axios.get(`/api/kanban/` + taskId)
+}
+
+//----------- Register and Login -----------//
+
+export function registerUser(username: string, password: string){
+    return axios.post(`/api/register`,{
+        username,
+        password
+    })
+}
+
+export function sendLogin(username: string, password: string){
+    return axios.post(`/api/login`,{
+        username,
+        password
+    })
+        .then((response:AxiosResponse<LoginResponse>) => response.data)
 }

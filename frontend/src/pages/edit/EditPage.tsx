@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
-import {Task} from "../service/model";
+import {Task} from "../../service/model";
 import {useNavigate, useParams} from "react-router-dom";
-import {editTask, getTask} from "../service/apiServices";
+import {editTask, getTask} from "../../service/apiServices";
 import "./EditPage.css"
 
 

@@ -4,3 +4,7 @@ export interface Task{
     task : string,
     description : string
 }
+
+export interface LoginResponse{
+    token: string
+}

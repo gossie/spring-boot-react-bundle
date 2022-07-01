@@ -1,10 +1,10 @@
-import Header from "../components/Header";
-import InputForm from "../components/InputForm";
-import KanbanGallery from "../components/KanbanGallery";
+import Header from "../../components/Header";
+import InputForm from "../../components/InputForm";
+import KanbanGallery from "../../components/KanbanGallery";
 import {useEffect, useState} from "react";
-import {Task} from "../service/model";
-import {fetchAllTasks} from "../service/apiServices";
-import "./Error.css"
+import {Task} from "../../service/model";
+import {fetchAllTasks} from "../../service/apiServices";
+import "../Error.css"
 
 export default function MainPage(){
 
