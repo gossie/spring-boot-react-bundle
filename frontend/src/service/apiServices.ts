@@ -33,7 +33,7 @@ export function getTask(taskId: string){
 //----------- Register and Login -----------//
 
 export function registerUser(username: string, password: string){
-    return axios.post(`/api/register`,{
+    return axios.post(`/api/user`,{
         username,
         password
     })
