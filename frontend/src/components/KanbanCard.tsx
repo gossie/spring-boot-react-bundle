@@ -45,9 +45,9 @@ export default function KanbanCard(props: KanbanCardProps){
             {errorMessage3 && <p className={"error"}>{errorMessage3}</p>}
             <p data-testid={"task"}>{props.task.task}</p>
             <p data-testid={"description"}>{props.task.description}</p>
-            {props.task.status === "OPEN" ? <button onClick={deleteCard}>Delete</button> : <button onClick={demoteCard}>Demote</button>}
+            {props.task.status === "OPEN" ? <button onClick={deleteCard}>Delete</button> : <button onClick={demoteCard}>:(</button>}
             <button className={"editbutton"} onClick={()=> nav("/" + props.task.id)}>Edit</button>
-            {props.task.status === "DONE" ? <button onClick={deleteCard}>Delete</button> : <button onClick={promoteCard}>Promote</button>}
+            {props.task.status === "DONE" ? <button onClick={deleteCard}>Delete</button> : <button onClick={promoteCard}>:)</button>}
         </Paper>
     )
 }
