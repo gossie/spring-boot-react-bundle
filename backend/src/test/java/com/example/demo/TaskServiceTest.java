@@ -17,29 +17,44 @@ public class TaskServiceTest {
     void shouldAddOneTask(){
         //given
         Task t1 = new Task("Aufräumen", "Zimmer aufräumen", "hans");
+        Principal p1 = new Principal() {
+            @Override
+            public String getName() {
+                return "hans";
+            }
+        };
         RepoDB taskRepo = mock(RepoDB.class);
         TaskService taskService = new TaskService(taskRepo);
         //when
-        taskService.addOneTaskToDo(t1);
+        taskService.addOneTaskToDo(t1, p1);
         //then
         Mockito.verify(taskRepo).save(t1);
     }
-
+/*
     @Test
-    void shouldListAllTasks(){
+    void shouldListAllTasksFromHans(){
         //given
         Task t1 = new Task("Aufräumen", "Zimmer aufräumen", "hans");
-        Task t2 = new Task("Abwaschen", "Dreckiges Geschirr abwaschen", "peter");
+        Task t2 = new Task("Aufräumen", "Küche aufräumen", "hans");
+        Task t3 = new Task("Abwaschen", "Dreckiges Geschirr abwaschen", "peter");
+        Principal p1 = new Principal() {
+            @Override
+            public String getName() {
+                return "hans";
+            }
+        };
         RepoDB taskRepo = mock(RepoDB.class);
-        when(taskRepo.findAll()).thenReturn(List.of(t1, t2));
+        when(taskRepo.findAllByUserId(p1.getName())).thenReturn(List.of(t1, t2));
         TaskService taskService = new TaskService(taskRepo);
         //when
-        Collection<Task> actual = taskService.listAllTasksById();
+        Collection<Task> actual = taskService.listAllTasksById(p1);
         //then
         Assertions.assertThat(actual)
                 .isEqualTo(List.of(t1, t2));
         Assertions.assertThat(actual).hasSize(2);
     }
+
+ */
 
     @Test
     void shouldDeleteOneTask(){
@@ -86,9 +101,15 @@ public class TaskServiceTest {
         //Given
         Task t1 = new Task("Aufräumen", "Zimmer aufräumen","hans");
         Task t2 = new Task("Aufräumen", "Zimmer aufräumen","hans");
+        Principal p1 = new Principal() {
+            @Override
+            public String getName() {
+                return null;
+            }
+        };
         RepoDB taskRepo = mock(RepoDB.class);
         TaskService taskService = new TaskService(taskRepo);
-        taskService.addOneTaskToDo(t1);
+        taskService.addOneTaskToDo(t1, p1);
         //when
         t1.setTask("Bier trinken");
         t1.setDescription("Mit den Jungs");
