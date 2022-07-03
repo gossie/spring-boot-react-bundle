@@ -39,9 +39,10 @@ export default function EditPage() {
             'id': todo.id,
             'task': task,
             'description': description,
-            'status': todo.status
+            'status': todo.status,
+            'userId': todo.userId
         })
-            .then(() => nav("/"))
+            .then(() => nav("/main"))
     }
 
     return (
@@ -50,12 +51,10 @@ export default function EditPage() {
                 <h1 className={"header"}>Edit-Page</h1>
             </div>
             <div>
-                <span><TextField className={"inputedit"} type="text" placeholder={"Task"} value={task} onChange={event => setTask(event.target.value)}/></span>
-                <br/>
-                <span><TextField className={"inputedit"} type="text" placeholder={"Description"} value={description}
+                <span className={"input"} ><TextField type="text" placeholder={"Task"} value={task} onChange={event => setTask(event.target.value)}/></span>
+                <span className={"input"} ><TextField type="text" placeholder={"Description"} value={description}
                              onChange={event => setDescription(event.target.value)}/></span>
-                <br/>
-                <span className={"button"}><Button variant={"contained"} onClick={saveChange}>Save</Button></span>
+                <span className={"input"}><Button variant={"contained"} onClick={saveChange}>Save</Button></span>
                 {errorMessage && <div className={"error"}>{errorMessage}</div>}
             </div>
         </div>
