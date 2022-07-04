@@ -11,7 +11,7 @@ interface GalleryCategoryProps {
 export default function GalleryCategory(props: GalleryCategoryProps) {
     return (
         <Grid item xs={4}>
-            <Item  sx={{ m: 2 }}>
+            <Item  sx={{ m: 1 }}>
                 <Typography color={"textSecondary"} variant={"h4"} align={"center"}>{props.name}</Typography>
                 {
                     props.todos
