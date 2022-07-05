@@ -2,38 +2,29 @@ import {useEffect, useState} from "react";
 import GalleryCategory from "./GalleryCategory";
 import {Todo} from "../model";
 import {getAllTasks} from "../apiService";
-import {useNavigate} from "react-router-dom";
-import {Box, Button, Grid, Typography} from "@mui/material";
+import {Box, Grid} from "@mui/material";
 
 export default function KanbanBoard () {
 
     const [todos, setTodos] = useState<Todo[]>([]);
 
-    const nav = useNavigate();
-
     useEffect(() => {
         getAllTodos();
     }, []);
 
+    console.log("In KanbanBoard Body")
 
     const getAllTodos = () => {
         console.log(`fetch all todos`);
         return getAllTasks()
             .then(tds => {
                 setTodos(tds);
-            });
-    }
-
-    function goToNewTaskPage(){
-        nav("/new");
-    }
+            })
+            .catch(()=>setTodos([]));
+    };
 
     return (
         <div className="board">
-            <Typography color={"textSecondary"} variant={"h3"} align={"center"} gutterBottom>
-                Super Duper Beste Todo App
-            </Typography>
-            <Button  sx={{ ml: 2 }} variant="outlined" onClick={() => goToNewTaskPage()}>Create new todo</Button>
             <Box sx={{flexGrow: 1}}>
                 <Grid container spacing={2}>
                     {

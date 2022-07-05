@@ -9,6 +9,7 @@ export default function AuthProvider({children}:{children :ReactNode}) {
     const [username, setUsername] = useState('');
 
     useEffect(() => {
+        console.log("rerender")
         if (token) {
             const decoded = window.atob(token.split('.')[1]);
             const decodeJWT = JSON.parse(decoded);
@@ -17,8 +18,10 @@ export default function AuthProvider({children}:{children :ReactNode}) {
         }
     }, [token, nav]);
 
+    console.log("In AuthProvider Body");
 
     const logout = () => {
+        console.log("logout")
         localStorage.removeItem('jwt');
         setToken('');
         setRoles([]);

@@ -12,7 +12,7 @@ export default function GalleryCategory(props: GalleryCategoryProps) {
     return (
         <Grid item xs={4}>
             <Item  sx={{ m: 1 }}>
-                <Typography color={"textSecondary"} variant={"h4"} align={"center"}>{props.name}</Typography>
+                <Typography color={"textSecondary"} variant={"h5"} align={"center"}>{props.name}</Typography>
                 {
                     props.todos
                         .map((t) => <GalleryItem key={t.id} todo={t} fetchAll={props.fetchAll}/>)

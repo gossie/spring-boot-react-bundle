@@ -13,7 +13,7 @@ export default function LoginPage() {
 
     useEffect( () => {
             if (token) {
-                nav("/")
+                nav("/board")
             }
         }
     , [token, nav]);
@@ -26,7 +26,7 @@ export default function LoginPage() {
         event.preventDefault();
         sendLogin({username, password})
             .then(r => login(r.token) )
-            .then(() => nav("/userpage"));
+            .then(() => nav("/board"));
     };
 
     return (

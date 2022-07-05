@@ -8,6 +8,7 @@ import React from "react";
 import AuthProvider from "./usermanagement/AuthProvider";
 import LoginPage from "./usermanagement/LoginPage";
 import RegisterPage from "./usermanagement/RegisterPage";
+import NavBar from "./components/NavBar";
 
 
 const darkTheme = createTheme({
@@ -23,13 +24,15 @@ function App() {
             <CssBaseline/>
             <BrowserRouter>
                 <AuthProvider>
-                <Routes>
-                    <Route path="/" element={<KanbanBoard/>}/>
-                    <Route path="/login" element={<LoginPage/>}/>
-                    <Route path="/register" element={<RegisterPage/>}/>
-                    <Route path="/new" element={<NewItem/>}/>
-                    <Route path="/edit/:id" element={<EditItem/>}/>
-                </Routes>
+                    <NavBar/>
+                    <Routes>
+                        <Route path="/" element={<LoginPage/>}/>
+                        <Route path="/board" element={<KanbanBoard/>}/>
+                        <Route path="/login" element={<LoginPage/>}/>
+                        <Route path="/register" element={<RegisterPage/>}/>
+                        <Route path="/new" element={<NewItem/>}/>
+                        <Route path="/edit/:id" element={<EditItem/>}/>
+                    </Routes>
                 </AuthProvider>
             </BrowserRouter>
         </ThemeProvider>
