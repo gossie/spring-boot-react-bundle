@@ -17,17 +17,17 @@ export default function EditForm(props: EditFormProps){
 
     useEffect(()=>{
         localStorage.setItem('newItemTaskField', task);
-    },[task])
+    },[task]);
 
     useEffect(()=>{
         localStorage.setItem('newItemDescField', description);
-    },[description])
+    },[description]);
 
     const nav = useNavigate();
 
     const cancel = () => {
         nav("/");
-    }
+    };
 
 return (
     <div>
@@ -45,11 +45,13 @@ return (
                }}/>
         <br/>
         <Button onClick={() => {
-            localStorage.clear();
+            localStorage.removeItem("newItemTaskField");
+            localStorage.removeItem("newItemDescField");
             cancel();
         }}>cancel</Button>
         <Button onClick={() => {
-            localStorage.clear();
+            localStorage.removeItem("newItemTaskField");
+            localStorage.removeItem("newItemDescField");
             props.setTaskAndDescription(task, description);
         }} data-testid={"editformsubmit"}>{props.buttonText}</Button>
     </div>

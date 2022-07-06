@@ -1,4 +1,4 @@
-package com.example.demo.todo;
+package com.example.demo.model.task;
 
 public enum TodoStatus {
 OPEN, IN_PROGRESS, DONE;
