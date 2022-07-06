@@ -1,10 +1,15 @@
 package com.example.demo.todo;
 
+import com.example.demo.model.task.Todo;
+import com.example.demo.model.task.TodoCreationData;
+import com.example.demo.model.user.OutOfBrainUser;
+import com.example.demo.usermanagement.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,16 +19,19 @@ import java.util.Optional;
 @RequestMapping("/api/kanban")
 public class TodoController {
 
+    private final UserService userService;
     private final TodoService todoService;
 
     @GetMapping
-    public List<Todo> getTodos(){
-        return todoService.getAllTodos();
+    public List<Todo> getTodos(Principal principal){
+        OutOfBrainUser user = userService.findByUsername(principal.getName()).orElseThrow();
+        return todoService.getAllTodos(user.getId());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Todo> getTodoById(@PathVariable String id){
-        return ResponseEntity.of(todoService.getTodoById(id));
+    public ResponseEntity<Todo> getTodoById(@PathVariable String id, Principal principal){
+        OutOfBrainUser user = userService.findByUsername(principal.getName()).orElseThrow();
+        return ResponseEntity.of(todoService.getTodoById(id, user.getId()));
     }
 
 
@@ -32,38 +40,46 @@ public class TodoController {
      * @return ResponseEntity body is the previously saved version
      */
     @PutMapping
-    public ResponseEntity<Todo> saveTodoChanges(@RequestBody Todo todo){
+    public ResponseEntity<Todo> saveTodoChanges(@RequestBody Todo todo, Principal principal){
+        OutOfBrainUser user = userService.findByUsername(principal.getName()).orElseThrow();
         if(todo.getTask()==null || todo.getTask().equals("")){
             return ResponseEntity.badRequest().body(todo);
         }
-        return ResponseEntity.of(Optional.ofNullable(todoService.saveTodoChanges(todo)));
+        return ResponseEntity.of(Optional.ofNullable(todoService.saveTodoChanges(todo, user.getId())));
     }
 
     @PostMapping
-    public ResponseEntity<Todo> addTodo(@RequestBody Todo todo){
+    public ResponseEntity<Void> addTodo(@RequestBody TodoCreationData todo, Principal principal){
+        OutOfBrainUser user = userService.findByUsername(principal.getName()).orElseThrow();
         if(todo.getTask()==null || todo.getTask().equals("")){
-            return ResponseEntity.badRequest().body(todo);
+            return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(todoService.addTodo(todo));
+        todoService.addTodo(todo, user.getId());
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteTodo(@PathVariable String id){
-        if(todoService.deleteTodo(id)){
+    public ResponseEntity<Void> deleteTodo(@PathVariable String id, Principal principal){
+        OutOfBrainUser user = userService.findByUsername(principal.getName()).orElseThrow();
+        if(todoService.deleteTodo(id, user.getId())){
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/next")
-    public ResponseEntity<Todo> moveTodoToNextStatus(@RequestBody Todo todo){
-
-        return ResponseEntity.of(todoService.nextTodoStatus(todo));
+    public ResponseEntity<Todo> moveTodoToNextStatus(@RequestBody Todo todo, Principal principal){
+        OutOfBrainUser user = userService.findByUsername(principal.getName()).orElseThrow();
+        try {
+            return ResponseEntity.of(todoService.nextTodoStatus(todo, user.getId()));
+        }catch(Exception e){
+            return ResponseEntity.badRequest().build();
+        }
     }
     @PutMapping("/prev")
-    public ResponseEntity<Todo> moveTodoToPrevStatus(@RequestBody Todo todo){
-
-        return ResponseEntity.of(todoService.prevTodoStatus(todo));
+    public ResponseEntity<Todo> moveTodoToPrevStatus(@RequestBody Todo todo, Principal principal){
+        OutOfBrainUser user = userService.findByUsername(principal.getName()).orElseThrow();
+        return ResponseEntity.of(todoService.prevTodoStatus(todo, user.getId()));
     }
 
 }
