@@ -30,6 +30,7 @@ public class UserService  implements UserDetailsService {
         OutOfBrainUser user = new OutOfBrainUser();
         user.setUsername(userCreationDTO.getUsername());
         user.setPassword(passwordEncoder.encode(userCreationDTO.getPassword()));
+        user.setRoles(List.of("user"));
 
         return userRepository.save(user);
     }

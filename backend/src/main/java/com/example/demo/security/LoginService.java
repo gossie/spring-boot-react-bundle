@@ -24,6 +24,6 @@ public class LoginService {
         OutOfBrainUser user = userService.findByUsername(loginData.getUsername()).orElseThrow();
         Map<String, Object> claims = new HashMap<>();
         claims.put("roles", user.getRoles());
-        return LoginResponse.builder().token(jwtService.createJwt(claims, loginData.getUsername())).build();
+        return new LoginResponse(jwtService.createJwt(claims, loginData.getUsername()));
     }
 }

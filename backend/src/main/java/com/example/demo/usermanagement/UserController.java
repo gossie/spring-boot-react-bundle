@@ -2,6 +2,7 @@ package com.example.demo.usermanagement;
 
 import com.example.demo.model.user.UserCreationDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ public class UserController {
     public ResponseEntity<Void> registerUser(@RequestBody UserCreationDTO userCreationDTO){
         try {
             userService.createUser(userCreationDTO);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         }
