@@ -12,7 +12,7 @@ jest.mock('react-router-dom', () => ({
 test('Edit item mocked', async ()=>{
 
     jest.spyOn(axios, 'get').mockImplementationOnce((url) => {
-        expect(url).toEqual('/2');
+        expect(url).toEqual('/api/kanban/2');
         return Promise.reject({status: 404});
     })
 

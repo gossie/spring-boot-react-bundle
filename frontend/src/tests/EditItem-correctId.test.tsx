@@ -15,18 +15,18 @@ test('Edit item mocked', async ()=>{
     const task1edited: Todo = {description: "desc1edited", id: "1", status: "OPEN", task: "task1edited"};
 
     jest.spyOn(axios, 'get').mockImplementationOnce((url) => {
-        expect(url).toEqual('/' + task1.id);
+        expect(url).toEqual('/api/kanban/' + task1.id);
         return Promise.resolve({status: 200, data: task1});
     }).mockImplementationOnce((url) => {
-        expect(url).toEqual('/' + task1.id);
+        expect(url).toEqual('/api/kanban/' + task1.id);
         return Promise.resolve({status: 200, data: task1edited});
     })
 
     jest.spyOn(axios, 'put').mockImplementationOnce((url: string) => {
-        expect(url).toEqual('');
+        expect(url).toEqual('/api/kanban');
         return Promise.reject({response: {status: 400}});
     }).mockImplementationOnce((url: string) => {
-        expect(url).toEqual('');
+        expect(url).toEqual('/api/kanban');
         return Promise.resolve({status: 200, data: task1});
     })
 
