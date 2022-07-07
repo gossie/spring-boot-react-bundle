@@ -1,5 +1,6 @@
 package com.example.demo.usermanagement;
 
+import com.example.demo.model.security.GithubUser;
 import com.example.demo.model.user.OutOfBrainUser;
 import com.example.demo.model.user.UserCreationDTO;
 import lombok.RequiredArgsConstructor;
@@ -44,5 +45,13 @@ public class UserService  implements UserDetailsService {
 
     public Optional<OutOfBrainUser> findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+
+    public OutOfBrainUser createOrGetUserFromMongoDB(GithubUser githubUser) {
+        Optional<OutOfBrainUser> userFromDB = userRepository.findByGithubUserId(githubUser.getId());
+        return userFromDB.orElseGet(() -> userRepository.save(
+                new OutOfBrainUser(githubUser)
+        ));
     }
 }

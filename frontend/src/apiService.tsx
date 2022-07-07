@@ -75,3 +75,9 @@ export function sendLogin(user: MyUser) {
     return axios.post("/api/login", user)
         .then((response: AxiosResponse<LoginResponse>) => response.data)
 }
+
+
+export function githubOauthRequest(code: string) {
+    return axios.get("/api/oauth" + code)
+        .then((response: AxiosResponse<LoginResponse>) => response.data);
+}

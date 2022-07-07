@@ -9,6 +9,7 @@ import AuthProvider from "./usermanagement/AuthProvider";
 import LoginPage from "./usermanagement/LoginPage";
 import RegisterPage from "./usermanagement/RegisterPage";
 import NavBar from "./components/NavBar";
+import OauthPage from "./usermanagement/OauthPage";
 
 
 const darkTheme = createTheme({
@@ -32,6 +33,7 @@ function App() {
                         <Route path="/register" element={<RegisterPage/>}/>
                         <Route path="/new" element={<NewItem/>}/>
                         <Route path="/edit/:id" element={<EditItem/>}/>
+                        <Route path="/oauth" element={<OauthPage/>}/>
                     </Routes>
                 </AuthProvider>
             </BrowserRouter>
