@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface UserMongoRepository extends MongoRepository<OutOfBrainUser, String> {
     Optional<OutOfBrainUser> findByUsername(String username);
+
+    Optional<OutOfBrainUser> findByGithubUserId(long githubUserId);
 }
